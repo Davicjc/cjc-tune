@@ -3,13 +3,55 @@
   <url>
     <loc>https://tune.cjc.pics/</loc>
     <lastmod>2026-11-13</lastmod>
+    <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tune.cjc.pics/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://tune.cjc.pics/en/"/>
   </url>
   <url>
     <loc>https://tune.cjc.pics/en/</loc>
     <lastmod>2026-11-13</lastmod>
+    <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://tune.cjc.pics/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://tune.cjc.pics/en/"/>
+  </url>
+  <url>
+    <loc>https://tune.cjc.pics/guias/equalizador-ubuntu/</loc>
+    <lastmod>2026-11-13</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tune.cjc.pics/guias/equalizador-linux-mint/</loc>
+    <lastmod>2026-11-13</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tune.cjc.pics/guias/equalizador-pipewire/</loc>
+    <lastmod>2026-11-13</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tune.cjc.pics/guias/alternativa-fxsound-linux/</loc>
+    <lastmod>2026-11-13</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tune.cjc.pics/guias/aumentar-grave-fone-linux/</loc>
+    <lastmod>2026-11-13</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tune.cjc.pics/en/guides/linux-system-wide-equalizer/</loc>
+    <lastmod>2026-11-13</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tune.cjc.pics/en/guides/pipewire-equalizer/</loc>
+    <lastmod>2026-11-13</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tune.cjc.pics/en/guides/fxsound-for-linux-alternative/</loc>
+    <lastmod>2026-11-13</lastmod>
+    <priority>0.7</priority>
   </url>
 </urlset>

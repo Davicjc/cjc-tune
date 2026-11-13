@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="{{lang}}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="darkreader-lock">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#ffffff">
+  <title>{{titulo}} · CJC Tune</title>
+  <meta name="description" content="{{descricao}}">
+  <meta name="author" content="Davi Castro (davicjc)">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="{{url}}">
+  {{alternates}}
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="CJC Tune">
+  <meta property="og:locale" content="{{og_locale}}">
+  <meta property="og:title" content="{{titulo}}">
+  <meta property="og:description" content="{{descricao}}">
+  <meta property="og:url" content="{{url}}">
+  <meta property="og:image" content="{{site}}/img/og-{{lang_curto}}.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{titulo}}">
+  <meta name="twitter:description" content="{{descricao}}">
+  <meta name="twitter:image" content="{{site}}/img/og-{{lang_curto}}.png">
+  <link rel="icon" type="image/svg+xml" href="{{raiz}}img/icone.svg">
+  <link rel="icon" type="image/png" href="{{raiz}}favicon.png">
+  <link rel="apple-touch-icon" href="{{raiz}}img/apple-touch-icon.png">
+  <link rel="preload" href="{{raiz}}fontes/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{raiz}}estilo.css">
+  <script type="application/ld+json">{{jsonld}}</script>
+</head>
+<body>
+  <a class="pular" href="#conteudo">{{skip}}</a>
+  <header class="topo">
+    <a class="marca" href="{{home}}" aria-label="CJC Tune">
+      <img src="{{raiz}}img/icone.svg" alt="" width="28" height="28">
+      <span>CJC Tune</span>
+    </a>
+    <nav class="menu" aria-label="Menu">
+      <a href="{{home}}#como">{{nav_como}}</a>
+      <a href="{{home}}#ouca">{{nav_ouca}}</a>
+      <a href="{{home}}#recursos">{{nav_recursos}}</a>
+      <a href="{{home}}#guias">{{nav_guias}}</a>
+    </nav>
+    <div class="topo__acoes">
+      <a class="botao botao--pequeno" href="{{home}}#instalar">{{nav_baixar}}</a>
+    </div>
+  </header>
+
+  <main id="conteudo" class="artigo">
+    <nav class="trilha" aria-label="{{trilha_rotulo}}">
+      <a href="{{home}}">CJC Tune</a> <span aria-hidden="true">/</span> <a href="{{home}}#guias">{{nav_guias}}</a>
+    </nav>
+    <h1>{{h1}}</h1>
+    <p class="artigo__lead">{{resumo}}</p>
+    <figure class="artigo__foto">
+      <img src="{{raiz}}img/eq-{{lang_curto}}.webp" alt="{{foto_alt}}" width="1760" height="1120" loading="lazy" decoding="async">
+    </figure>
+    {{corpo}}
+    <aside class="artigo__cta">
+      <img src="{{raiz}}img/icone.svg" alt="" width="56" height="56">
+      <div>
+        <strong>CJC Tune {{versao}}</strong>
+        <span>{{cta_texto}}</span>
+      </div>
+      <a class="botao" href="{{home}}#instalar">{{nav_baixar}}</a>
+    </aside>
+    <section class="artigo__mais" aria-labelledby="mais-titulo">
+      <h2 id="mais-titulo">{{mais_titulo}}</h2>
+      <ul>{{relacionados}}</ul>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="rodape__marca">
+      <img src="{{raiz}}img/icone.svg" alt="" width="36" height="36">
+      <div>
+        <strong>CJC Tune</strong>
+        <span>{{rodape_feito}} <a href="https://davicjc.com" rel="author">davicjc</a> · {{rodape_base}}</span>
+      </div>
+    </div>
+    <nav class="rodape__links" aria-label="Links">
+      <a href="{{home}}">CJC Tune</a>
+      <a href="https://github.com/Davicjc/cjc-tune" rel="noopener">GitHub</a>
+      <a href="https://github.com/Davicjc/cjc-tune/releases" rel="noopener">{{rodape_novidades}}</a>
+    </nav>
+  </footer>
+  <!-- Cloudflare Web Analytics: contagem de visitas sem cookies. -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "343a7c43a990407cb258537337cb4086"}'></script>
+  <script src="https://footer.davicjc.com/projetos/footer-davi/footer_davicjc.js" defer></script>
+</body>
+</html>

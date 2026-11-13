@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="darkreader-lock">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#ffffff">
+  <title>Como aumentar o grave do fone no Linux (sem distorcer) · CJC Tune</title>
+  <meta name="description" content="Passo a passo para deixar o grave mais forte no Linux sem estourar o som: equalizador nas bandas certas, HyperBass e volume. Funciona em fone, headset e caixa de som.">
+  <meta name="author" content="Davi Castro (davicjc)">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://tune.cjc.pics/guias/aumentar-grave-fone-linux/">
+  <link rel="alternate" hreflang="pt-BR" href="https://tune.cjc.pics/guias/aumentar-grave-fone-linux/">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="CJC Tune">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="Como aumentar o grave do fone no Linux (sem distorcer)">
+  <meta property="og:description" content="Passo a passo para deixar o grave mais forte no Linux sem estourar o som: equalizador nas bandas certas, HyperBass e volume. Funciona em fone, headset e caixa de som.">
+  <meta property="og:url" content="https://tune.cjc.pics/guias/aumentar-grave-fone-linux/">
+  <meta property="og:image" content="https://tune.cjc.pics/img/og-pt.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Como aumentar o grave do fone no Linux (sem distorcer)">
+  <meta name="twitter:description" content="Passo a passo para deixar o grave mais forte no Linux sem estourar o som: equalizador nas bandas certas, HyperBass e volume. Funciona em fone, headset e caixa de som.">
+  <meta name="twitter:image" content="https://tune.cjc.pics/img/og-pt.png">
+  <link rel="icon" type="image/svg+xml" href="../../img/icone.svg">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+  <link rel="preload" href="../../fontes/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../estilo.css">
+  <script type="application/ld+json">[{"@context":"https://schema.org","@type":"TechArticle","headline":"Como aumentar o grave do fone no Linux (sem distorcer)","description":"Passo a passo para deixar o grave mais forte no Linux sem estourar o som: equalizador nas bandas certas, HyperBass e volume. Funciona em fone, headset e caixa de som.","inLanguage":"pt-BR","url":"https://tune.cjc.pics/guias/aumentar-grave-fone-linux/","mainEntityOfPage":"https://tune.cjc.pics/guias/aumentar-grave-fone-linux/","datePublished":"2026-11-13","dateModified":"2026-11-13","image":"https://tune.cjc.pics/img/og-pt.png","author":{"@type":"Person","name":"Davi Castro","url":"https://davicjc.com"},"publisher":{"@type":"Person","name":"Davi Castro","url":"https://davicjc.com"},"about":{"@type":"SoftwareApplication","name":"CJC Tune","operatingSystem":"Linux","url":"https://tune.cjc.pics/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"CJC Tune","item":"https://tune.cjc.pics/"},{"@type":"ListItem","position":2,"name":"Guias","item":"https://tune.cjc.pics/#guias"},{"@type":"ListItem","position":3,"name":"Como aumentar o grave do fone no Linux","item":"https://tune.cjc.pics/guias/aumentar-grave-fone-linux/"}]},{"@context":"https://schema.org","@type":"HowTo","name":"Como aumentar o grave do fone no Linux","description":"Quais bandas subir, quanto, e como evitar que o som estoure.","inLanguage":"pt-BR","step":[{"@type":"HowToStep","position":1,"text":"Instale e abra o CJC Tune."},{"@type":"HowToStep","position":2,"text":"Escolha a predefinição Grave profundo, ou suba 32 Hz, 64 Hz e 125 Hz entre +4 e +8 dB."},{"@type":"HowToStep","position":3,"text":"Baixe um pouco 250 e 500 Hz (−1 a −3 dB) para o grave não embolar com a voz."},{"@type":"HowToStep","position":4,"text":"Em Efeitos, suba o HyperBass. Ele encorpa o grave e dá mais cauda à batida."},{"@type":"HowToStep","position":5,"text":"Deixe o volume do sistema em até 100% e ajuste o volume no próprio fone ou no app."}]}]</script>
+</head>
+<body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+  <header class="topo">
+    <a class="marca" href="../../" aria-label="CJC Tune">
+      <img src="../../img/icone.svg" alt="" width="28" height="28">
+      <span>CJC Tune</span>
+    </a>
+    <nav class="menu" aria-label="Menu">
+      <a href="../../#como">Como funciona</a>
+      <a href="../../#ouca">Ouça</a>
+      <a href="../../#recursos">Recursos</a>
+      <a href="../../#guias">Guias</a>
+    </nav>
+    <div class="topo__acoes">
+      <a class="botao botao--pequeno" href="../../#instalar">Baixar</a>
+    </div>
+  </header>
+
+  <main id="conteudo" class="artigo">
+    <nav class="trilha" aria-label="Você está em">
+      <a href="../../">CJC Tune</a> <span aria-hidden="true">/</span> <a href="../../#guias">Guias</a>
+    </nav>
+    <h1>Como aumentar o grave do fone no Linux</h1>
+    <p class="artigo__lead">Quais bandas subir, quanto, e como evitar que o som estoure.</p>
+    <figure class="artigo__foto">
+      <img src="../../img/eq-pt.webp" alt="Equalizador do CJC Tune com a curva de 10 bandas" width="1760" height="1120" loading="lazy" decoding="async">
+    </figure>
+    <p>Grave forte não é só subir tudo. O grave mora nas bandas de 32, 64 e 125 Hz; subir demais as médias (250 a 500 Hz) deixa o som abafado, e passar do volume máximo do sistema distorce antes de qualquer equalizador.</p>
+    <h2>Passo a passo com o CJC Tune</h2>
+    <ol><li>Instale e abra o CJC Tune.</li><li>Escolha a predefinição Grave profundo, ou suba 32 Hz, 64 Hz e 125 Hz entre +4 e +8 dB.</li><li>Baixe um pouco 250 e 500 Hz (−1 a −3 dB) para o grave não embolar com a voz.</li><li>Em Efeitos, suba o HyperBass. Ele encorpa o grave e dá mais cauda à batida.</li><li>Deixe o volume do sistema em até 100% e ajuste o volume no próprio fone ou no app.</li></ol>
+    <h2>Por que não estoura</h2>
+    <p>O CJC Tune tem um limitador no fim da cadeia: quando o grave forte passaria do máximo, ele segura o pico em vez de deixar o som rachar. E os filtros mudam suavemente, sem estalo quando você arrasta a curva.</p>
+    <h2>Salve o seu</h2>
+    <p>Achou o ponto certo? Use Salvar… e dê um nome, como Grave para filmes. O Personalizado também fica guardado quando você testa outra predefinição.</p>
+    <aside class="artigo__cta">
+      <img src="../../img/icone.svg" alt="" width="56" height="56">
+      <div>
+        <strong>CJC Tune 1.0.0</strong>
+        <span>Grátis e de código aberto. AppImage e .deb para qualquer Linux com PipeWire ou PulseAudio.</span>
+      </div>
+      <a class="botao" href="../../#instalar">Baixar</a>
+    </aside>
+    <section class="artigo__mais" aria-labelledby="mais-titulo">
+      <h2 id="mais-titulo">Outros guias</h2>
+      <ul><li><a href="../equalizador-ubuntu/"><strong>Equalizador para Ubuntu</strong><span>Instale um equalizador que vale para tudo o que toca no Ubuntu, em dois minutos.</span></a></li><li><a href="../equalizador-linux-mint/"><strong>Equalizador para Linux Mint</strong><span>O Mint não tem equalizador de sistema. Veja como colocar um em poucos cliques.</span></a></li><li><a href="../equalizador-pipewire/"><strong>Equalizador para PipeWire e PulseAudio</strong><span>O que acontece por baixo e como escolher entre o CJC Tune e o EasyEffects.</span></a></li><li><a href="../alternativa-fxsound-linux/"><strong>Alternativa ao FxSound no Linux</strong><span>O FxSound é só para Windows. Veja como ter os mesmos efeitos no Linux.</span></a></li></ul>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="rodape__marca">
+      <img src="../../img/icone.svg" alt="" width="36" height="36">
+      <div>
+        <strong>CJC Tune</strong>
+        <span>Feito por <a href="https://davicjc.com" rel="author">davicjc</a> · Baseado no FXSound for Linux (Raul909, MIT).</span>
+      </div>
+    </div>
+    <nav class="rodape__links" aria-label="Links">
+      <a href="../../">CJC Tune</a>
+      <a href="https://github.com/Davicjc/cjc-tune" rel="noopener">GitHub</a>
+      <a href="https://github.com/Davicjc/cjc-tune/releases" rel="noopener">Novidades</a>
+    </nav>
+  </footer>
+  <!-- Cloudflare Web Analytics: contagem de visitas sem cookies. -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "343a7c43a990407cb258537337cb4086"}'></script>
+  <script src="https://footer.davicjc.com/projetos/footer-davi/footer_davicjc.js" defer></script>
+</body>
+</html>

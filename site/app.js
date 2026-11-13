@@ -169,6 +169,58 @@
   addEventListener("scroll", marcarTopo, { passive: true });
   marcarTopo();
 
+  // ── Ondas no fundo do hero: soma de senoides como um sinal de áudio,
+  // linhas de 1 px e lentas. Param fora da tela e com a aba escondida;
+  // com reduced-motion o desenho é feito uma vez e fica parado.
+  const ondas = document.querySelector("[data-ondas]");
+  if (ondas) {
+    const ctx = ondas.getContext("2d");
+    const LINHAS = [
+      { a: 0.9, f: 1.2, v: 0.22, y: 0.62, cor: "rgba(29,29,31,.10)" },
+      { a: 0.7, f: 1.9, v: -0.16, y: 0.66, cor: "rgba(29,29,31,.07)" },
+      { a: 1.1, f: 0.8, v: 0.12, y: 0.70, cor: "rgba(10,132,255,.16)" },
+      { a: 0.6, f: 2.6, v: 0.28, y: 0.74, cor: "rgba(29,29,31,.06)" },
+      { a: 0.8, f: 1.5, v: -0.2, y: 0.78, cor: "rgba(29,29,31,.05)" },
+    ];
+    let L = 0, A = 0, t = 0, raf = null, visivel = true, ultimo = 0;
+    const medir = () => {
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      L = ondas.clientWidth; A = ondas.clientHeight;
+      ondas.width = Math.round(L * dpr); ondas.height = Math.round(A * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    const desenhar = () => {
+      ctx.clearRect(0, 0, L, A);
+      const amp = Math.min(A * 0.09, 70);
+      for (const o of LINHAS) {
+        ctx.beginPath();
+        for (let x = 0; x <= L; x += 6) {
+          const u = x / L;
+          // Envelope: mais forte no meio, some nas bordas, como um trecho de áudio.
+          const env = Math.sin(Math.PI * u) ** 1.4;
+          const y = A * o.y + amp * o.a * env * (
+            Math.sin(u * Math.PI * 2 * o.f * 3 + t * o.v * 6) * 0.6 +
+            Math.sin(u * Math.PI * 2 * o.f * 7.3 - t * o.v * 9) * 0.25 +
+            Math.sin(u * Math.PI * 2 * o.f * 1.1 + t * o.v * 3) * 0.15);
+          x ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+        }
+        ctx.strokeStyle = o.cor; ctx.lineWidth = 1.2; ctx.stroke();
+      }
+    };
+    const quadro = (agora) => {
+      raf = requestAnimationFrame(quadro);
+      if (agora - ultimo < 1000 / 30) return; // 30 fps bastam para algo tão lento
+      ultimo = agora; t += 1 / 30; desenhar();
+    };
+    const ligar = () => { if (!raf && visivel && !document.hidden && !calmo) raf = requestAnimationFrame(quadro); };
+    const desligar = () => { cancelAnimationFrame(raf); raf = null; };
+    medir(); desenhar();
+    addEventListener("resize", () => { medir(); desenhar(); });
+    new IntersectionObserver(([e]) => { visivel = e.isIntersecting; visivel ? ligar() : desligar(); }).observe(ondas);
+    document.addEventListener("visibilitychange", () => (document.hidden ? desligar() : ligar()));
+    ligar();
+  }
+
   // ── Hero ──
   const heroEl = document.querySelector('[data-eq="hero"]');
   const hero = heroEl && new EqVivo(heroEl);
