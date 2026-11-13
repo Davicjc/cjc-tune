@@ -17,6 +17,63 @@ use std::time::Duration;
 /// but the file is rewritten at most this often.
 const SAVE_DELAY: Duration = Duration::from_millis(400);
 
+/// EQ and effects together: what a preset holds.
+#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[serde(default)]
+pub struct Sound {
+    pub eq: [f32; 10],
+    pub effects: Effects,
+}
+
+/// A preset the user saved under a name of their own.
+#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+#[serde(default)]
+pub struct UserPreset {
+    pub name: String,
+    #[serde(flatten)]
+    pub sound: Sound,
+}
+
+/// Most user presets kept; more is a list nobody can scan.
+pub const MAX_USER_PRESETS: usize = 40;
+/// Longest user preset name, in characters.
+pub const MAX_PRESET_NAME: usize = 40;
+/// Names reserved by the built-in presets (and "Custom").
+pub const BUILT_IN_PRESETS: [&str; 11] = [
+    "Custom",
+    "Flat",
+    "Music",
+    "Movies",
+    "Gaming",
+    "Podcast",
+    "Bass Boost",
+    "Vocal Boost",
+    "Deep Bass",
+    "Treble Boost",
+    "Night Mode",
+];
+pub const ERR_PRESET_NAME: &str = "error.preset-name";
+pub const ERR_PRESET_RESERVED: &str = "error.preset-reserved";
+pub const ERR_PRESET_FULL: &str = "error.preset-full";
+
+/// A user preset name, trimmed, or why it cannot be used.
+pub fn preset_name(name: &str) -> Result<String, &'static str> {
+    let name = name.trim();
+    if name.is_empty()
+        || name.chars().count() > MAX_PRESET_NAME
+        || name.chars().any(char::is_control)
+    {
+        return Err(ERR_PRESET_NAME);
+    }
+    if BUILT_IN_PRESETS
+        .iter()
+        .any(|b| b.eq_ignore_ascii_case(name))
+    {
+        return Err(ERR_PRESET_RESERVED);
+    }
+    Ok(name.to_string())
+}
+
 #[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 #[serde(default)]
 pub struct Effects {
@@ -25,6 +82,27 @@ pub struct Effects {
     pub dynamic: f32,
     pub surround: f32,
     pub bass: f32,
+}
+
+impl Sound {
+    fn sanitized(mut self) -> Self {
+        for gain in self.eq.iter_mut() {
+            *gain = if gain.is_finite() {
+                gain.clamp(-12.0, 12.0)
+            } else {
+                0.0
+            };
+        }
+        for (name, value) in self.effects.iter() {
+            let value = if value.is_finite() {
+                value.clamp(0.0, 100.0)
+            } else {
+                0.0
+            };
+            self.effects.set(name, value);
+        }
+        self
+    }
 }
 
 impl Effects {
@@ -62,6 +140,51 @@ pub struct Settings {
     pub output_device: Option<String>,
     /// Window and rendering behaviour (not audio).
     pub ui: UiSettings,
+    /// The last "Custom" sound, so picking Custom again after trying a preset
+    /// brings it back instead of losing it.
+    pub custom: Option<Sound>,
+    /// Presets saved by the user, in the order they were made.
+    pub user_presets: Vec<UserPreset>,
+}
+
+impl Settings {
+    /// The current EQ and effects.
+    pub fn sound(&self) -> Sound {
+        Sound {
+            eq: self.eq,
+            effects: self.effects.clone(),
+        }
+    }
+
+    /// Save the current sound under `name` (replacing one with that name) and
+    /// make it the selected preset.
+    pub fn save_user_preset(&mut self, name: &str) -> Result<(), &'static str> {
+        let name = preset_name(name)?;
+        let sound = self.sound();
+        if let Some(existing) = self.user_presets.iter_mut().find(|p| p.name == name) {
+            existing.sound = sound;
+        } else {
+            if self.user_presets.len() >= MAX_USER_PRESETS {
+                return Err(ERR_PRESET_FULL);
+            }
+            self.user_presets.push(UserPreset {
+                name: name.clone(),
+                sound,
+            });
+        }
+        self.preset = name;
+        Ok(())
+    }
+
+    /// Remove a user preset. If it was selected, the sound stays as it is and
+    /// becomes "Custom".
+    pub fn delete_user_preset(&mut self, name: &str) {
+        self.user_presets.retain(|p| p.name != name);
+        if self.preset == name {
+            self.preset = "Custom".into();
+            self.custom = Some(self.sound());
+        }
+    }
 }
 
 /// How the app window behaves. Files saved before these existed load with
@@ -136,6 +259,8 @@ impl Default for Settings {
             effects: Effects::default(),
             output_device: None,
             ui: UiSettings::default(),
+            custom: None,
+            user_presets: Vec::new(),
         }
     }
 }
@@ -160,6 +285,19 @@ impl Settings {
             self.effects.set(name, value);
         }
         self.output_device = self.output_device.filter(|d| !d.is_empty());
+        self.custom = self.custom.map(Sound::sanitized);
+        let mut seen = std::collections::HashSet::new();
+        self.user_presets = std::mem::take(&mut self.user_presets)
+            .into_iter()
+            .filter_map(|p| {
+                let name = preset_name(&p.name).ok()?;
+                seen.insert(name.clone()).then(|| UserPreset {
+                    name,
+                    sound: p.sound.sanitized(),
+                })
+            })
+            .take(MAX_USER_PRESETS)
+            .collect();
         self.preset = clean_preset(Some(self.preset));
         self.ui = self.ui.cleaned();
         self
@@ -611,5 +749,59 @@ mod export_tests {
         }
         .cleaned();
         assert_eq!((ui.theme.as_str(), ui.accent.as_str()), ("dark", "green"));
+    }
+
+    #[test]
+    fn user_presets_save_replace_and_delete() {
+        let mut s = Settings::default();
+        s.eq[0] = 6.0;
+        s.save_user_preset("  Meu grave  ").unwrap();
+        assert_eq!(s.preset, "Meu grave");
+        assert_eq!(s.user_presets.len(), 1);
+        s.eq[0] = 9.0;
+        s.save_user_preset("Meu grave").unwrap();
+        assert_eq!(s.user_presets.len(), 1, "same name replaces");
+        assert_eq!(s.user_presets[0].sound.eq[0], 9.0);
+        assert_eq!(s.save_user_preset("music"), Err(ERR_PRESET_RESERVED));
+        assert_eq!(s.save_user_preset("   "), Err(ERR_PRESET_NAME));
+        assert_eq!(s.save_user_preset(&"x".repeat(41)), Err(ERR_PRESET_NAME));
+        s.delete_user_preset("Meu grave");
+        assert!(s.user_presets.is_empty());
+        assert_eq!(s.preset, "Custom");
+        assert_eq!(
+            s.custom.as_ref().unwrap().eq[0],
+            9.0,
+            "the sound stays as Custom"
+        );
+    }
+
+    #[test]
+    fn user_presets_round_trip_and_bad_ones_are_dropped() {
+        let mut s = Settings::default();
+        s.eq[1] = 3.0;
+        s.save_user_preset("A").unwrap();
+        s.user_presets.push(UserPreset {
+            name: "A".into(),
+            ..Default::default()
+        });
+        s.user_presets.push(UserPreset {
+            name: "Flat".into(),
+            ..Default::default()
+        });
+        let mut bad = UserPreset {
+            name: "Alto".into(),
+            ..Default::default()
+        };
+        bad.sound.eq[2] = 99.0;
+        s.user_presets.push(bad);
+        let back = import_json(&export_json(&s)).unwrap();
+        let names: Vec<_> = back.user_presets.iter().map(|p| p.name.as_str()).collect();
+        assert_eq!(
+            names,
+            ["A", "Alto"],
+            "duplicates and reserved names are dropped"
+        );
+        assert_eq!(back.user_presets[0].sound.eq[1], 3.0);
+        assert_eq!(back.user_presets[1].sound.eq[2], 12.0, "clamped");
     }
 }

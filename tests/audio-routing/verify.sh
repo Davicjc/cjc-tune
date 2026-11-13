@@ -161,12 +161,14 @@ expect "chosen output device remembered" grep -q '"output_device": "hw_headphone
 
 echo; echo "=== 7. Crash, then relaunch"
 pactl set-default-sink hw_speakers
+# Counts are relative: earlier scenarios (the restart in 5b) add their own lines.
+BEFORE=$(grep -c "Routing system audio through CJC Tune" /tmp/app.log)
 start_app
-wait_for 10 sh -c '[ "$(grep -c "Routing system audio through CJC Tune" /tmp/app.log)" -ge 2 ]'
+wait_for 10 sh -c "[ \$(grep -c 'Routing system audio through CJC Tune' /tmp/app.log) -gt $BEFORE ]"
 kill -KILL "$APP"; sleep 1
 expect "(after SIGKILL the leftover device is still there, as expected)" [ "$(sink_count cjc_tune_sink)" -eq 1 ]
 start_app
-expect "relaunch cleans up and routes again within 10 s" wait_for 10 sh -c '[ "$(grep -c "Routing system audio through CJC Tune" /tmp/app.log)" -ge 3 ]'
+expect "relaunch cleans up and routes again within 10 s" wait_for 10 sh -c "[ \$(grep -c 'Routing system audio through CJC Tune' /tmp/app.log) -gt $((BEFORE + 1)) ]"
 sleep 1
 expect "exactly one CJC Tune device after recovery" [ "$(sink_count cjc_tune_sink)" -eq 1 ]
 OUT=$(fx_output)

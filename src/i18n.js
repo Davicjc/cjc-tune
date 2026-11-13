@@ -13,6 +13,24 @@ export const LANGUAGES = [
 ];
 
 const en = {
+    "preset.builtIn": "Presets",
+    "preset.mine": "My presets",
+    "preset.saveAs": "Save…",
+    "preset.delete": "Delete",
+    "sheet.saveTitle": "Save preset",
+    "sheet.saveText": "Keeps the current EQ and effects under a name of your own.",
+    "sheet.name": "Name",
+    "sheet.placeholder": "e.g. Bass for movies",
+    "sheet.cancel": "Cancel",
+    "sheet.save": "Save",
+    "sheet.replace": "Replace",
+    "sheet.replaces": "Replaces the saved “{name}”.",
+    "sheet.deleteTitle": "Delete “{name}”?",
+    "sheet.deleteText": "The sound you hear now stays, as Custom.",
+    "error.preset-name": "Use 1 to 40 characters.",
+    "error.preset-reserved": "That name belongs to a built-in preset.",
+    "error.preset-full": "You can keep up to 40 presets.",
+
     "upd.title": "Updates",
     "upd.available": "Version {version} available",
     "upd.install": "Update",
@@ -161,6 +179,24 @@ const en = {
 };
 
 const pt = {
+    "preset.builtIn": "Predefinições",
+    "preset.mine": "Minhas predefinições",
+    "preset.saveAs": "Salvar…",
+    "preset.delete": "Apagar",
+    "sheet.saveTitle": "Salvar predefinição",
+    "sheet.saveText": "Guarda o equalizador e os efeitos de agora com um nome seu.",
+    "sheet.name": "Nome",
+    "sheet.placeholder": "ex.: Grave para filmes",
+    "sheet.cancel": "Cancelar",
+    "sheet.save": "Salvar",
+    "sheet.replace": "Substituir",
+    "sheet.replaces": "Substitui a “{name}” já salva.",
+    "sheet.deleteTitle": "Apagar “{name}”?",
+    "sheet.deleteText": "O som de agora continua, como Personalizado.",
+    "error.preset-name": "Use de 1 a 40 caracteres.",
+    "error.preset-reserved": "Esse nome é de uma predefinição do app.",
+    "error.preset-full": "Dá para guardar até 40 predefinições.",
+
     "upd.title": "Atualizações",
     "upd.available": "Versão {version} disponível",
     "upd.install": "Atualizar",
@@ -309,6 +345,24 @@ const pt = {
 };
 
 const es = {
+    "preset.builtIn": "Preajustes",
+    "preset.mine": "Mis preajustes",
+    "preset.saveAs": "Guardar…",
+    "preset.delete": "Eliminar",
+    "sheet.saveTitle": "Guardar preajuste",
+    "sheet.saveText": "Guarda el ecualizador y los efectos actuales con un nombre propio.",
+    "sheet.name": "Nombre",
+    "sheet.placeholder": "p. ej.: Graves para películas",
+    "sheet.cancel": "Cancelar",
+    "sheet.save": "Guardar",
+    "sheet.replace": "Reemplazar",
+    "sheet.replaces": "Reemplaza el “{name}” guardado.",
+    "sheet.deleteTitle": "¿Eliminar “{name}”?",
+    "sheet.deleteText": "El sonido actual se mantiene, como Personalizado.",
+    "error.preset-name": "Usa de 1 a 40 caracteres.",
+    "error.preset-reserved": "Ese nombre es de un preajuste de la app.",
+    "error.preset-full": "Puedes guardar hasta 40 preajustes.",
+
     "upd.title": "Actualizaciones",
     "upd.available": "Versión {version} disponible",
     "upd.install": "Actualizar",
@@ -457,6 +511,24 @@ const es = {
 };
 
 const zh = {
+    "preset.builtIn": "预设",
+    "preset.mine": "我的预设",
+    "preset.saveAs": "保存…",
+    "preset.delete": "删除",
+    "sheet.saveTitle": "保存预设",
+    "sheet.saveText": "用你自己的名字保存当前的均衡器和音效。",
+    "sheet.name": "名称",
+    "sheet.placeholder": "例如：电影低音",
+    "sheet.cancel": "取消",
+    "sheet.save": "保存",
+    "sheet.replace": "替换",
+    "sheet.replaces": "将替换已保存的“{name}”。",
+    "sheet.deleteTitle": "删除“{name}”？",
+    "sheet.deleteText": "当前的声音会保留为“自定义”。",
+    "error.preset-name": "请使用 1 到 40 个字符。",
+    "error.preset-reserved": "该名称属于内置预设。",
+    "error.preset-full": "最多可保存 40 个预设。",
+
     "upd.title": "更新",
     "upd.available": "有新版本 {version}",
     "upd.install": "更新",

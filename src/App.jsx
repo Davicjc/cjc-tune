@@ -5,6 +5,7 @@ import { FIRST_PRESET, PRESETS, PRESET_EQ, PRESET_FX, isKnownPreset } from "./li
 import Sidebar from "./components/Sidebar";
 import { EffectsPage, EqualizerPage, OutputPage, SettingsPage } from "./components/Pages";
 import { Button, PopUp } from "./ui/controls";
+import { ConfirmSheet, SavePresetSheet } from "./components/Sheets";
 
 const FLAT_FX = PRESET_FX.Flat;
 
@@ -17,6 +18,14 @@ function useBackend() {
     const [audio, setAudio] = useState({ state: "starting", message: null, devices: [], output: null, preferred: null });
     const [info, setInfo] = useState(null);
     const [visible, setVisible] = useState(() => document.visibilityState !== "hidden");
+    // Presets the user saved, and the last "Custom" sound (kept while trying
+    // other presets, so choosing Custom again brings it back).
+    const [userPresets, setUserPresets] = useState([]);
+    const [custom, setCustom] = useState(null);
+    const live = useRef({ eq, fx, preset });
+    useEffect(() => {
+        live.current = { eq, fx, preset };
+    }, [eq, fx, preset]);
     // Bumped by every options change, so a slow `get_ui_info` reply started
     // before a newer change is dropped instead of undoing it.
     const uiSeq = useRef(0);
@@ -26,10 +35,13 @@ function useBackend() {
     const restartRef = useRef({ active: false, sawDown: false, timer: null });
 
     const adopt = useCallback((s) => {
+        const mine = s.user_presets ?? [];
         setPowered(s.powered);
-        setPreset(isKnownPreset(s.preset) ? s.preset : "Custom");
+        setPreset(isKnownPreset(s.preset) || mine.some((p) => p.name === s.preset) ? s.preset : "Custom");
         setEq([...s.eq]);
         setFx({ ...FLAT_FX, ...s.effects });
+        setUserPresets(mine);
+        setCustom(s.custom ?? null);
     }, []);
 
     useEffect(() => {
@@ -84,11 +96,34 @@ function useBackend() {
             call("set_power", { enabled: next }).catch(console.error);
         },
         preset(name) {
-            if (!PRESET_EQ[name]) return;
+            let sound = null;
+            if (PRESET_EQ[name]) sound = { eq: PRESET_EQ[name], effects: PRESET_FX[name] };
+            else if (name === "Custom") sound = custom;
+            else sound = userPresets.find((p) => p.name === name) ?? null;
+            if (!sound) return;
+            // Leaving Custom keeps it, so it can be picked again later.
+            if (live.current.preset === "Custom" && name !== "Custom") {
+                setCustom({ eq: [...live.current.eq], effects: { ...live.current.fx } });
+            }
             setPreset(name);
-            setEq([...PRESET_EQ[name]]);
-            setFx({ ...PRESET_FX[name] });
-            call("apply_preset_state", { eqBands: PRESET_EQ[name], effects: PRESET_FX[name], preset: name }).catch(console.error);
+            setEq([...sound.eq]);
+            setFx({ ...FLAT_FX, ...sound.effects });
+            call("apply_preset_state", { eqBands: sound.eq, effects: { ...FLAT_FX, ...sound.effects }, preset: name }).catch(console.error);
+        },
+        /** Save the current sound under `name`; rejects with an error code. */
+        savePreset(name) {
+            return call("save_user_preset", { name }).then((saved) => {
+                setUserPresets(saved.user_presets ?? []);
+                setPreset(saved.preset);
+                return saved.preset;
+            });
+        },
+        deletePreset(name) {
+            return call("delete_user_preset", { name }).then((saved) => {
+                setUserPresets(saved.user_presets ?? []);
+                setPreset(saved.preset);
+                setCustom(saved.custom ?? null);
+            });
         },
         band(index, gain) {
             setEq((prev) => prev.map((g, i) => (i === index ? gain : g)));
@@ -111,7 +146,7 @@ function useBackend() {
                 .then((r) => r && setInfo((prev) => (prev ? { ...prev, language: r.language, next_renderer: r.next_renderer } : prev)))
                 .catch(console.error);
         },
-    }), []);
+    }), [custom, userPresets]);
 
     const restart = useCallback(() => {
         const r = restartRef.current;
@@ -132,7 +167,7 @@ function useBackend() {
     const nextSeq = useCallback(() => ++uiSeq.current, []);
     const isLatest = useCallback((n) => uiSeq.current === n, []);
 
-    return { powered, preset, eq, fx, audio, info, setInfo, visible, nextSeq, isLatest, adopt, actions, restarting, restart };
+    return { powered, preset, eq, fx, audio, info, setInfo, visible, nextSeq, isLatest, adopt, actions, restarting, restart, userPresets, custom };
 }
 
 /**
@@ -207,6 +242,7 @@ export default function App() {
     const updates = useUpdates(info ? info.ui.check_updates !== false : false);
     const [page, setPage] = useState("eq");
     const [notice, setNotice] = useState(null);
+    const [sheet, setSheet] = useState(null);
 
     const language = info?.language ?? "pt";
     const t = useMemo(() => makeT(language), [language]);
@@ -252,9 +288,14 @@ export default function App() {
     const { restarting, restart } = b;
     const status = describe(t, b.audio, b.powered, restarting);
     const presetOptions = [
-        ...PRESETS.map((p) => ({ value: p, label: t(`preset.${p}`) })),
-        ...(b.preset === "Custom" ? [{ value: "Custom", label: t("preset.Custom") }] : []),
+        { group: t("preset.builtIn"), options: PRESETS.map((p) => ({ value: p, label: t(`preset.${p}`) })) },
+        ...(b.userPresets.length
+            ? [{ group: t("preset.mine"), options: b.userPresets.map((p) => ({ value: p.name, label: p.name })) }]
+            : []),
+        // Shown while in use, or when there is a remembered Custom to go back to.
+        ...(b.preset === "Custom" || b.custom ? [{ value: "Custom", label: t("preset.Custom") }] : []),
     ];
+    const isUserPreset = b.userPresets.some((p) => p.name === b.preset);
     const showPresets = page === "eq" || page === "fx";
     const spectrumOn = page === "eq" && b.visible && (info?.ui.visualizer ?? true);
 
@@ -290,6 +331,14 @@ export default function App() {
                                     onChange={b.actions.preset}
                                     disabled={!b.powered}
                                 />
+                                <Button small onClick={() => setSheet({ kind: "save" })} disabled={!b.powered}>
+                                    {t("preset.saveAs")}
+                                </Button>
+                                {isUserPreset && (
+                                    <Button small onClick={() => setSheet({ kind: "delete", name: b.preset })}>
+                                        {t("preset.delete")}
+                                    </Button>
+                                )}
                             </div>
                         )}
                     </header>
@@ -314,6 +363,23 @@ export default function App() {
                         )}
                     </div>
                 </main>
+                {sheet?.kind === "save" && (
+                    <SavePresetSheet
+                        initial={isUserPreset ? b.preset : ""}
+                        existing={b.userPresets.map((p) => p.name)}
+                        onSave={(name) => b.actions.savePreset(name).then(() => setSheet(null))}
+                        onCancel={() => setSheet(null)}
+                    />
+                )}
+                {sheet?.kind === "delete" && (
+                    <ConfirmSheet
+                        title={t("sheet.deleteTitle", { name: sheet.name })}
+                        text={t("sheet.deleteText")}
+                        confirm={t("preset.delete")}
+                        onConfirm={() => b.actions.deletePreset(sheet.name).then(() => setSheet(null))}
+                        onCancel={() => setSheet(null)}
+                    />
+                )}
             </div>
         </I18nContext.Provider>
     );

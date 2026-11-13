@@ -218,6 +218,8 @@ pub fn run() {
             check_update,
             install_update,
             open_release_page,
+            save_user_preset,
+            delete_user_preset,
         ])
         .on_window_event(|window, event| {
             if let WindowEvent::CloseRequested { api, .. } = event {

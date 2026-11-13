@@ -35,9 +35,17 @@ export function PopUp({ value, options, onChange, disabled, label, id, wide }) {
                 aria-label={label}
                 onChange={(e) => onChange(e.target.value)}
             >
-                {options.map((o) => (
-                    <option key={o.value} value={o.value}>{o.label}</option>
-                ))}
+                {options.map((o) =>
+                    o.group ? (
+                        <optgroup key={o.group} label={o.group}>
+                            {o.options.map((x) => (
+                                <option key={x.value} value={x.value}>{x.label}</option>
+                            ))}
+                        </optgroup>
+                    ) : (
+                        <option key={o.value} value={o.value}>{o.label}</option>
+                    ),
+                )}
             </select>
             <svg className="popup__chevrons" width="7" height="11" viewBox="0 0 7 11" aria-hidden="true">
                 <path d="M1 4l2.5-2.5L6 4M1 7l2.5 2.5L6 7" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />

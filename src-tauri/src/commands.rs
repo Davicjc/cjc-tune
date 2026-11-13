@@ -30,6 +30,7 @@ pub(crate) fn set_eq_band(state: State<AppState>, band: usize, gain: f32) -> Res
     state.settings.update(|s| {
         s.eq[band] = gain;
         s.preset = "Custom".into();
+        s.custom = Some(s.sound());
     });
     Ok(())
 }
@@ -49,6 +50,7 @@ pub(crate) fn set_effect(state: State<AppState>, effect: String, value: f32) -> 
     state.settings.update(|s| {
         s.effects.set(&effect, value);
         s.preset = "Custom".into();
+        s.custom = Some(s.sound());
     });
     Ok(())
 }
@@ -355,4 +357,22 @@ pub(crate) async fn install_update(app: AppHandle) -> Result<(), String> {
 #[tauri::command]
 pub(crate) fn open_release_page(url: String) -> Result<(), String> {
     update::open_page(&url)
+}
+
+/// Save the current sound as a user preset; returns the saved settings.
+#[tauri::command]
+pub(crate) fn save_user_preset(state: State<AppState>, name: String) -> Result<Settings, String> {
+    let mut result = Ok(());
+    state
+        .settings
+        .update(|s| result = s.save_user_preset(&name));
+    result.map_err(String::from)?;
+    Ok(state.settings.get().unwrap_or_default())
+}
+
+/// Delete a user preset; returns the saved settings.
+#[tauri::command]
+pub(crate) fn delete_user_preset(state: State<AppState>, name: String) -> Settings {
+    state.settings.update(|s| s.delete_user_preset(&name));
+    state.settings.get().unwrap_or_default()
 }
