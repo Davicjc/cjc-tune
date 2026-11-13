@@ -15,6 +15,8 @@
   <img alt="MIT license" src="https://img.shields.io/badge/License-MIT-0a84ff?style=for-the-badge">
 </p>
 
+<p align="center"><a href="https://tune.cjc.pics/en/"><strong>tune.cjc.pics</strong></a></p>
+
 <p align="center"><a href="README.md">Português</a> · <strong>English</strong></p>
 
 <p align="center">

@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="{{lang}}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="darkreader-lock">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#0c0f14">
+  <title>{{title}}</title>
+  <meta name="description" content="{{description}}">
+  <meta name="keywords" content="{{keywords}}">
+  <meta name="author" content="Davi Castro (davicjc)">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="{{site}}{{caminho}}">
+  <link rel="alternate" hreflang="pt-BR" href="{{site}}/">
+  <link rel="alternate" hreflang="en" href="{{site}}/en/">
+  <link rel="alternate" hreflang="x-default" href="{{site}}/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="CJC Tune">
+  <meta property="og:locale" content="{{og_locale}}">
+  <meta property="og:title" content="{{title}}">
+  <meta property="og:description" content="{{description}}">
+  <meta property="og:url" content="{{site}}{{caminho}}">
+  <meta property="og:image" content="{{site}}/img/og-{{lang_curto}}.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{{hero_alt}}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{title}}">
+  <meta name="twitter:description" content="{{description}}">
+  <meta name="twitter:image" content="{{site}}/img/og-{{lang_curto}}.png">
+
+  <link rel="icon" type="image/svg+xml" href="{{raiz}}img/icone.svg">
+  <link rel="icon" type="image/png" href="{{raiz}}favicon.png">
+  <link rel="apple-touch-icon" href="{{raiz}}img/apple-touch-icon.png">
+  <link rel="preload" href="{{raiz}}fontes/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{raiz}}fontes/instrument-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{raiz}}estilo.css">
+
+  <script type="application/ld+json">{{jsonld}}</script>
+</head>
+<body>
+  <a class="pular" href="#conteudo">{{skip}}</a>
+
+  <header class="topo">
+    <a class="marca" href="./" aria-label="CJC Tune">
+      <img src="{{raiz}}img/icone.svg" alt="" width="28" height="28">
+      <span>CJC Tune</span>
+    </a>
+    <nav class="menu" aria-label="Menu">
+      <a href="#como">{{nav_como}}</a>
+      <a href="#ouca">{{nav_ouca}}</a>
+      <a href="#recursos">{{nav_recursos}}</a>
+      <a href="#telas">{{nav_telas}}</a>
+      <a href="#instalar">{{nav_instalar}}</a>
+    </nav>
+    <div class="topo__acoes">
+      <a class="idioma" href="{{outro_href}}" hreflang="{{outro_lang}}">{{outro_idioma}}</a>
+      <a class="botao botao--pequeno" href="#instalar">{{nav_baixar}}</a>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <!-- Hero: o objeto-assinatura é a própria curva do EQ, que se monta e fica arrastável. -->
+    <section class="hero" aria-labelledby="hero-titulo">
+      <div class="hero__texto">
+        <p class="kicker">{{hero_kicker}}</p>
+        <h1 id="hero-titulo">{{hero_h1}}</h1>
+        <p class="hero__lead">{{hero_p}}</p>
+        <div class="hero__ctas">
+          <a class="botao" href="#instalar" data-download>{{hero_baixar}}</a>
+          <a class="botao botao--fantasma" href="https://github.com/Davicjc/cjc-tune" rel="noopener">{{hero_github}}</a>
+        </div>
+        <p class="hero__versao" data-versao-texto="{{hero_versao_modelo}}">{{hero_versao}}</p>
+      </div>
+
+      <figure class="hero__objeto">
+        <div class="eq-vivo" data-eq="hero" data-ganhos="10,8,6,-2,-3,-3,4,6,8,10" role="img" aria-label="{{hero_alt}}">
+          <svg class="eq-vivo__svg" viewBox="0 0 600 360" aria-hidden="true"></svg>
+        </div>
+        <figcaption class="hero__dica">{{hero_dica}}</figcaption>
+      </figure>
+
+      <ul class="fatos" aria-label="CJC Tune">
+        <li>{{fato_1}}</li>
+        <li>{{fato_2}}</li>
+        <li>{{fato_3}}</li>
+        <li>{{fato_4}}</li>
+      </ul>
+    </section>
+
+    <!-- 01 Como funciona: o caminho do sinal, desenhado em fios. -->
+    <section class="secao secao--clara" id="como" aria-labelledby="como-titulo">
+      <div class="secao__cabeca">
+        <span class="num">{{como_num}}</span>
+        <h2 id="como-titulo">{{como_h2}}</h2>
+        <p>{{como_p}}</p>
+      </div>
+      <ol class="fluxo" data-fluxo>
+        <li class="fluxo__no"><strong>{{como_a}}</strong><span>{{como_a_p}}</span></li>
+        <li class="fluxo__no fluxo__no--marca"><strong>{{como_b}}</strong><span>{{como_b_p}}</span></li>
+        <li class="fluxo__no"><strong>{{como_c}}</strong><span>{{como_c_p}}</span></li>
+        <li class="fluxo__no"><strong>{{como_d}}</strong><span>{{como_d_p}}</span></li>
+      </ol>
+      <p class="secao__nota">{{como_nota}}</p>
+    </section>
+
+    <!-- 02 Ouça: a mesma cadeia de filtros do app, em Web Audio. -->
+    <section class="secao secao--escura" id="ouca" aria-labelledby="ouca-titulo">
+      <div class="secao__cabeca">
+        <span class="num">{{ouca_num}}</span>
+        <h2 id="ouca-titulo">{{ouca_h2}}</h2>
+        <p>{{ouca_p}}</p>
+      </div>
+      <div class="demo">
+        <div class="demo__painel">
+          <button class="tocar" type="button" data-tocar data-rotulo-tocar="{{ouca_play}}" data-rotulo-pausar="{{ouca_pause}}" aria-pressed="false">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path class="tocar__play" d="M8 5.5v13l10.5-6.5z"/><path class="tocar__pausa" d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>
+            <span>{{ouca_play}}</span>
+          </button>
+          <div class="ab" role="radiogroup" aria-label="{{ouca_com}}">
+            <button type="button" role="radio" aria-checked="true" data-ab="com">{{ouca_com}}</button>
+            <button type="button" role="radio" aria-checked="false" data-ab="sem">{{ouca_sem}}</button>
+          </div>
+        </div>
+        <div class="eq-vivo eq-vivo--grande" data-eq="demo" data-ganhos="10,8,6,-2,-3,-3,4,6,8,10" role="img" aria-label="{{hero_alt}}">
+          <svg class="eq-vivo__svg" viewBox="0 0 900 300" aria-hidden="true"></svg>
+        </div>
+        <div class="chips" role="radiogroup" aria-label="{{ouca_preset}}">
+          <button type="button" role="radio" aria-checked="false" data-preset="0,0,0,0,0,0,0,0,0,0">{{preset_neutro}}</button>
+          <button type="button" role="radio" aria-checked="false" data-preset="3,2,1,0,-1,0,2,3,3,2">{{preset_musica}}</button>
+          <button type="button" role="radio" aria-checked="true" data-preset="10,8,6,-2,-3,-3,4,6,8,10">{{preset_u}}</button>
+          <button type="button" role="radio" aria-checked="false" data-preset="10,8,6,2,0,-1,-2,-2,-3,-3">{{preset_grave}}</button>
+          <button type="button" role="radio" aria-checked="false" data-preset="-2,-1,0,3,5,5,3,1,0,-1">{{preset_voz}}</button>
+          <button type="button" role="radio" aria-checked="false" data-preset="2,2,1,0,-2,-2,-1,0,1,2">{{preset_noite}}</button>
+        </div>
+        <p class="demo__nota">{{ouca_volume}}</p>
+      </div>
+    </section>
+
+    <!-- 03 Recursos: grade par de seis. -->
+    <section class="secao secao--clara" id="recursos" aria-labelledby="rec-titulo">
+      <div class="secao__cabeca">
+        <span class="num">{{rec_num}}</span>
+        <h2 id="rec-titulo">{{rec_h2}}</h2>
+      </div>
+      <ul class="recursos">
+        <li><span class="recursos__icone" data-icone="reiniciar"></span><h3>{{rec_1_h}}</h3><p>{{rec_1_p}}</p></li>
+        <li><span class="recursos__icone" data-icone="salvar"></span><h3>{{rec_2_h}}</h3><p>{{rec_2_p}}</p></li>
+        <li><span class="recursos__icone" data-icone="saida"></span><h3>{{rec_3_h}}</h3><p>{{rec_3_p}}</p></li>
+        <li><span class="recursos__icone" data-icone="bandeja"></span><h3>{{rec_4_h}}</h3><p>{{rec_4_p}}</p></li>
+        <li><span class="recursos__icone" data-icone="atualizar"></span><h3>{{rec_5_h}}</h3><p>{{rec_5_p}}</p></li>
+        <li><span class="recursos__icone" data-icone="tema"></span><h3>{{rec_6_h}}</h3><p>{{rec_6_p}}</p></li>
+      </ul>
+    </section>
+
+    <!-- 04 Telas: baralho de janelas que se empilha em 3D com a rolagem. -->
+    <section class="secao secao--escura telas" id="telas" aria-labelledby="telas-titulo">
+      <div class="telas__palco" data-baralho>
+        <div class="secao__cabeca">
+          <span class="num">{{telas_num}}</span>
+          <h2 id="telas-titulo">{{telas_h2}}</h2>
+          <p>{{telas_p}}</p>
+        </div>
+        <ol class="baralho">
+          <li class="carta"><img src="{{raiz}}img/eq-{{lang_curto}}.webp" alt="{{tela_1}}: {{tela_1_p}}" width="1760" height="1120" loading="lazy" decoding="async"><div><strong>{{tela_1}}</strong><span>{{tela_1_p}}</span></div></li>
+          <li class="carta"><img src="{{raiz}}img/fx-{{lang_curto}}.webp" alt="{{tela_2}}: {{tela_2_p}}" width="1760" height="1120" loading="lazy" decoding="async"><div><strong>{{tela_2}}</strong><span>{{tela_2_p}}</span></div></li>
+          <li class="carta"><img src="{{raiz}}img/out-{{lang_curto}}.webp" alt="{{tela_3}}: {{tela_3_p}}" width="1760" height="1120" loading="lazy" decoding="async"><div><strong>{{tela_3}}</strong><span>{{tela_3_p}}</span></div></li>
+          <li class="carta"><img src="{{raiz}}img/set-{{lang_curto}}.webp" alt="{{tela_4}}: {{tela_4_p}}" width="1760" height="1120" loading="lazy" decoding="async"><div><strong>{{tela_4}}</strong><span>{{tela_4_p}}</span></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 05 Instalar -->
+    <section class="secao secao--clara" id="instalar" aria-labelledby="inst-titulo">
+      <div class="secao__cabeca">
+        <span class="num">{{inst_num}}</span>
+        <h2 id="inst-titulo">{{inst_h2}}</h2>
+      </div>
+      <div class="instalar">
+        <article class="pacote">
+          <h3>{{inst_appimage}}</h3>
+          <p>{{inst_appimage_p}}</p>
+          <pre><code data-cmd="appimage">chmod +x cjc-tune_{{versao}}_amd64.AppImage
+./cjc-tune_{{versao}}_amd64.AppImage</code></pre>
+          <div class="pacote__acoes">
+            <a class="botao" href="https://github.com/Davicjc/cjc-tune/releases/latest" data-asset="AppImage" rel="noopener">{{inst_baixar}} AppImage</a>
+            <button class="botao botao--fantasma" type="button" data-copiar="appimage" data-ok="{{inst_copiado}}">{{inst_copiar}}</button>
+          </div>
+        </article>
+        <article class="pacote">
+          <h3>{{inst_deb}}</h3>
+          <p>{{inst_deb_p}}</p>
+          <pre><code data-cmd="deb">sudo apt install ./cjc-tune_{{versao}}_amd64.deb</code></pre>
+          <div class="pacote__acoes">
+            <a class="botao" href="https://github.com/Davicjc/cjc-tune/releases/latest" data-asset="deb" rel="noopener">{{inst_baixar}} .deb</a>
+            <button class="botao botao--fantasma" type="button" data-copiar="deb" data-ok="{{inst_copiado}}">{{inst_copiar}}</button>
+          </div>
+        </article>
+      </div>
+      <p class="secao__nota">{{inst_req}}</p>
+    </section>
+
+    <!-- 06 Perguntas -->
+    <section class="secao secao--escura" id="perguntas" aria-labelledby="faq-titulo">
+      <div class="secao__cabeca">
+        <span class="num">{{faq_num}}</span>
+        <h2 id="faq-titulo">{{faq_h2}}</h2>
+      </div>
+      <div class="faq">{{faq_html}}</div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="rodape__marca">
+      <img src="{{raiz}}img/icone.svg" alt="" width="36" height="36">
+      <div>
+        <strong>CJC Tune</strong>
+        <span>{{rodape_feito}} <a href="https://davicjc.com" rel="author">davicjc</a> · {{rodape_base}}</span>
+      </div>
+    </div>
+    <nav class="rodape__links" aria-label="Links">
+      <a href="https://github.com/Davicjc/cjc-tune" rel="noopener">GitHub</a>
+      <a href="https://github.com/Davicjc/cjc-tune/releases" rel="noopener">{{rodape_novidades}}</a>
+      <a href="https://github.com/Davicjc/cjc-tune/blob/main/LICENSE" rel="noopener">{{rodape_licenca}}</a>
+      <a href="{{outro_href}}" hreflang="{{outro_lang}}">{{outro_idioma}}</a>
+    </nav>
+  </footer>
+
+  <script src="{{raiz}}app.js" defer></script>
+  <script src="https://footer.davicjc.com/projetos/footer-davi/footer_davicjc.js" defer></script>
+</body>
+</html>
