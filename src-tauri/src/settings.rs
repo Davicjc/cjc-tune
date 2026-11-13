@@ -84,6 +84,8 @@ pub struct UiSettings {
     pub theme: String,
     /// Accent color name, one of `ACCENTS`.
     pub accent: String,
+    /// Look for a new release on GitHub when the app starts.
+    pub check_updates: bool,
 }
 
 /// Themes the window can use.
@@ -120,6 +122,7 @@ impl Default for UiSettings {
             language: "auto".into(),
             theme: "auto".into(),
             accent: "blue".into(),
+            check_updates: true,
         }
     }
 }

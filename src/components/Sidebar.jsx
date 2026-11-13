@@ -49,11 +49,34 @@ function TrafficLights() {
     );
 }
 
+/** Shown above the power card while a newer release is waiting. */
+function UpdateCard({ updates }) {
+    const t = useT();
+    const { state, info, pct } = updates;
+    const busy = state === "installing";
+    return (
+        <div className="update-card" role="status">
+            <span className="update-card__title">{t("upd.available", { version: info.latest })}</span>
+            {busy ? (
+                <span className="update-card__progress">
+                    <span className="bar"><span style={{ width: `${pct}%` }} /></span>
+                    {pct >= 100 ? t("upd.restarting") : t("upd.downloading", { pct })}
+                </span>
+            ) : (
+                <button type="button" className="button button--primary button--small" onClick={updates.install}>
+                    {info.can_install ? t("upd.install") : t("upd.download")}
+                </button>
+            )}
+            {state === "failed" && <span className="update-card__error">{t("upd.failed", { msg: updates.error })}</span>}
+        </div>
+    );
+}
+
 /**
  * Full-height sidebar: window controls, the four sections, and at the bottom
  * the one control that matters most, processing on/off, with what is going on.
  */
-export default function Sidebar({ page, onPage, powered, onPower, status }) {
+export default function Sidebar({ page, onPage, powered, onPower, status, updates }) {
     const t = useT();
     return (
         <aside className="sidebar">
@@ -77,6 +100,10 @@ export default function Sidebar({ page, onPage, powered, onPower, status }) {
             </nav>
 
             <div className="sidebar__spacer" data-tauri-drag-region />
+
+            {updates.info?.available && (
+                <UpdateCard updates={updates} />
+            )}
 
             <div className="power">
                 <div className="power__head">

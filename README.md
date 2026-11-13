@@ -36,6 +36,7 @@ surround 3D e HyperBass. O resultado vai para o seu fone ou caixa de som, uma ve
 | **Bandeja** | Fechar a janela deixa o som processado rodando. Mostrar, esconder, ligar/desligar efeitos, reiniciar e sair pelo ícone |
 | **Aparência** | Tema claro, escuro ou automático e 8 cores de destaque, como no macOS |
 | **Iniciar com o sistema** | Com a opção de já começar escondido na bandeja. Funciona com o AppImage |
+| **Atualizações** | Quando sai versão nova no GitHub, aparece **Atualizar** na barra lateral. No AppImage ele baixa, confere o SHA-256 publicado pelo GitHub, troca o arquivo e reabre sozinho; no `.deb` abre a página da release. É a única coisa que acessa a internet, e dá para desligar |
 | **Exportar e importar** | A configuração em JSON. Também lê arquivos exportados pelo FXSound for Linux |
 | **Leve** | A janela é desenhada pela placa de vídeo onde isso é seguro, e o espectro para por completo com a janela escondida ou fora da tela do equalizador |
 | **4 idiomas** | Português, inglês, espanhol e chinês, na janela e no menu da bandeja |

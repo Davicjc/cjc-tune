@@ -1,6 +1,6 @@
 //! Commands the window calls with `invoke()`.
 
-use tauri::{AppHandle, State};
+use tauri::{AppHandle, Emitter, State};
 use tauri_plugin_autostart::ManagerExt as _;
 use tauri_plugin_dialog::DialogExt as _;
 
@@ -9,7 +9,7 @@ use crate::routing::RouteStatus;
 use crate::settings::{self, Settings, UiSettings};
 use crate::state::*;
 use crate::tray::restart_audio;
-use crate::{graphics, i18n};
+use crate::{graphics, i18n, update};
 
 // ── Tauri Commands ──
 // These functions are callable from the frontend via `invoke("command_name", { args })`.
@@ -322,4 +322,37 @@ pub(crate) fn get_visualizer_data(state: State<AppState>) -> Result<Vec<f32>, St
 #[tauri::command]
 pub(crate) fn restart_audio_service(state: State<AppState>) {
     restart_audio(&state);
+}
+
+/// Ask GitHub whether a newer release exists. Runs off the main thread.
+#[tauri::command]
+pub(crate) async fn check_update() -> Result<update::UpdateInfo, String> {
+    tauri::async_runtime::spawn_blocking(update::check)
+        .await
+        .map_err(|e| e.to_string())?
+}
+
+/// Download and install the new AppImage, then reopen from it. Progress
+/// (0–100) arrives as `update-progress` events. Only for AppImage copies.
+#[tauri::command]
+pub(crate) async fn install_update(app: AppHandle) -> Result<(), String> {
+    let events = app.clone();
+    let path = tauri::async_runtime::spawn_blocking(move || {
+        update::install(&|pct| {
+            let _ = events.emit("update-progress", pct);
+        })
+    })
+    .await
+    .map_err(|e| e.to_string())??;
+    update::relaunch_after_exit(&path)?;
+    // A normal exit: the virtual device goes away and the system output comes
+    // back before the new copy starts.
+    app.exit(0);
+    Ok(())
+}
+
+/// Open the release page (installs that cannot update themselves).
+#[tauri::command]
+pub(crate) fn open_release_page(url: String) -> Result<(), String> {
+    update::open_page(&url)
 }

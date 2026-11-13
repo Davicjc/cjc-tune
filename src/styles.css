@@ -310,6 +310,52 @@ button {
 .dot--starting { background: var(--warn); }
 .dot--error { background: var(--bad); }
 
+.update-card {
+  margin-bottom: 8px;
+  padding: 10px 12px;
+  border-radius: var(--radius-group);
+  background: color-mix(in srgb, var(--accent) 12%, var(--card));
+  border: 0.5px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+}
+
+.update-card__title {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.update-card__progress {
+  width: 100%;
+  font-size: 11px;
+  color: var(--text-2);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.update-card__error {
+  font-size: 11px;
+  color: var(--bad);
+}
+
+.bar {
+  display: block;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--track);
+  overflow: hidden;
+}
+
+.bar > span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.2s;
+}
+
 .signature {
   margin-top: 8px;
   text-align: center;

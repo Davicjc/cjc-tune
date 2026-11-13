@@ -13,6 +13,21 @@ export const LANGUAGES = [
 ];
 
 const en = {
+    "upd.title": "Updates",
+    "upd.available": "Version {version} available",
+    "upd.install": "Update",
+    "upd.download": "Download",
+    "upd.downloading": "Downloading… {pct}%",
+    "upd.restarting": "Reopening…",
+    "upd.upToDate": "You have the latest version",
+    "upd.check": "Check now",
+    "upd.checking": "Checking…",
+    "upd.error": "Could not check right now",
+    "upd.failed": "Update failed: {msg}",
+    "upd.auto": "Check for updates at launch",
+    "upd.autoHint": "The only thing that goes online (GitHub)",
+    "upd.notes": "What's new",
+
     "nav.eq": "Equalizer",
     "nav.fx": "Effects",
     "nav.output": "Output",
@@ -146,6 +161,21 @@ const en = {
 };
 
 const pt = {
+    "upd.title": "Atualizações",
+    "upd.available": "Versão {version} disponível",
+    "upd.install": "Atualizar",
+    "upd.download": "Baixar",
+    "upd.downloading": "Baixando… {pct}%",
+    "upd.restarting": "Reabrindo…",
+    "upd.upToDate": "Você está na versão mais nova",
+    "upd.check": "Procurar agora",
+    "upd.checking": "Procurando…",
+    "upd.error": "Não deu para verificar agora",
+    "upd.failed": "Falhou ao atualizar: {msg}",
+    "upd.auto": "Procurar atualizações ao abrir",
+    "upd.autoHint": "É a única coisa que acessa a internet (GitHub)",
+    "upd.notes": "Novidades",
+
     "nav.eq": "Equalizador",
     "nav.fx": "Efeitos",
     "nav.output": "Saída",
@@ -279,6 +309,21 @@ const pt = {
 };
 
 const es = {
+    "upd.title": "Actualizaciones",
+    "upd.available": "Versión {version} disponible",
+    "upd.install": "Actualizar",
+    "upd.download": "Descargar",
+    "upd.downloading": "Descargando… {pct}%",
+    "upd.restarting": "Reabriendo…",
+    "upd.upToDate": "Tienes la versión más reciente",
+    "upd.check": "Buscar ahora",
+    "upd.checking": "Buscando…",
+    "upd.error": "No se pudo comprobar ahora",
+    "upd.failed": "Falló la actualización: {msg}",
+    "upd.auto": "Buscar actualizaciones al abrir",
+    "upd.autoHint": "Es lo único que se conecta a internet (GitHub)",
+    "upd.notes": "Novedades",
+
     "nav.eq": "Ecualizador",
     "nav.fx": "Efectos",
     "nav.output": "Salida",
@@ -412,6 +457,21 @@ const es = {
 };
 
 const zh = {
+    "upd.title": "更新",
+    "upd.available": "有新版本 {version}",
+    "upd.install": "更新",
+    "upd.download": "下载",
+    "upd.downloading": "正在下载… {pct}%",
+    "upd.restarting": "正在重新打开…",
+    "upd.upToDate": "已是最新版本",
+    "upd.check": "立即检查",
+    "upd.checking": "正在检查…",
+    "upd.error": "暂时无法检查",
+    "upd.failed": "更新失败：{msg}",
+    "upd.auto": "打开时检查更新",
+    "upd.autoHint": "这是唯一需要联网的功能（GitHub）",
+    "upd.notes": "更新内容",
+
     "nav.eq": "均衡器",
     "nav.fx": "音效",
     "nav.output": "输出",

@@ -115,10 +115,18 @@ export function OutputPage({ audio, onDevice, onRestart, restarting, status }) {
     );
 }
 
+function updateLine(t, u) {
+    if (u.state === "checking") return t("upd.checking");
+    if (u.state === "error") return t("upd.error");
+    if (u.info?.available) return t("upd.available", { version: u.info.latest });
+    if (u.info) return t("upd.upToDate");
+    return t("set.version", { version: APP_VERSION });
+}
+
 const ACCENTS = ["blue", "purple", "pink", "red", "orange", "yellow", "green", "graphite"];
 const RENDER_MODES = ["auto", "gpu", "software"];
 
-export function SettingsPage({ info, onUi, onAutostart, onExport, onImport, notice }) {
+export function SettingsPage({ info, onUi, onAutostart, onExport, onImport, notice, updates }) {
     const t = useT();
     if (!info) return <p className="muted">{t("set.loading")}</p>;
     const { ui, graphics, tray_available: tray, autostart, system_language: sysLang } = info;
@@ -208,6 +216,25 @@ export function SettingsPage({ info, onUi, onAutostart, onExport, onImport, noti
                         <Button onClick={onExport}>{t("set.export")}</Button>
                         <Button onClick={onImport}>{t("set.import")}</Button>
                     </span>
+                </Row>
+            </Group>
+
+            <Group title={t("upd.title")} footer={updates.state === "failed" ? t("upd.failed", { msg: updates.error }) : undefined}>
+                <Row label={updateLine(t, updates)} hint={updates.info?.available && updates.info.notes ? updates.info.notes.split("\n")[0].replace(/^#+\s*/, "") : undefined}>
+                    {updates.info?.available ? (
+                        <Button primary onClick={updates.install} disabled={updates.state === "installing"}>
+                            {updates.state === "installing"
+                                ? t("upd.downloading", { pct: updates.pct })
+                                : updates.info.can_install ? t("upd.install") : t("upd.download")}
+                        </Button>
+                    ) : (
+                        <Button onClick={updates.check} disabled={updates.state === "checking"}>
+                            {updates.state === "checking" ? t("upd.checking") : t("upd.check")}
+                        </Button>
+                    )}
+                </Row>
+                <Row label={t("upd.auto")} hint={t("upd.autoHint")} htmlFor="s-updates">
+                    <Switch id="s-updates" checked={ui.check_updates !== false} onChange={set("check_updates")} />
                 </Row>
             </Group>
 

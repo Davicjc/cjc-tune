@@ -7,6 +7,7 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/); 
 Primeira versão do CJC Tune, um app próprio que nasceu do FXSound for Linux 1.2.0 (Raul909, MIT).
 
 ### Novo
+- **Atualizar pelo app**: quando sai release nova no GitHub aparece "Versão X disponível · Atualizar" na barra lateral e em Ajustes. No AppImage baixa, confere o SHA-256 publicado pelo GitHub, troca o arquivo de uma vez (um download ruim nunca substitui o atual) e reabre; no `.deb` abre a página da release. Pode ser desligado em Ajustes.
 - **Reiniciar serviço de áudio**, no menu da bandeja e na tela Saída. Recria o dispositivo virtual e zera os filtros sem fechar o app: resolve som estalando, travado ou sumido. `pkill -USR2 cjc-tune` faz o mesmo (dá para pôr num atalho de teclado).
 - **Interface nova no estilo macOS**: barra lateral com Equalizador, Efeitos, Saída e Ajustes; barra de título própria com os três botões; tema claro, escuro ou automático; 8 cores de destaque.
 - **Equalizador em gráfico**: a curva desenhada é a resposta real dos 10 filtros (mesma fórmula, mesmo Q, mesma taxa do processador), com um ponto por banda para arrastar e o espectro ao vivo por trás. Os controles verticais continuam embaixo para ajuste fino e pelo teclado.
@@ -22,7 +23,7 @@ Primeira versão do CJC Tune, um app próprio que nasceu do FXSound for Linux 1.
 ### Mudou
 - Código reorganizado: o processamento virou o módulo `dsp/` (filtros, reverb, dinâmica e cadeia em arquivos separados), o roteamento virou `routing`, e a inicialização foi dividida em `commands`, `tray` e `state`.
 - Nome, ícone, identificador (`com.davicjc.cjctune`), dispositivo de áudio (`cjc_tune_sink`) e pasta de configuração próprios.
-- Fonte Inter embutida; nada é baixado da internet.
+- Fonte Inter embutida. A única conexão é a busca de atualização no GitHub.
 
 ### Herdado do FXSound for Linux 1.2.0
 EQ de 10 bandas, efeitos (fidelidade, ambiente, reforço dinâmico, surround 3D, HyperBass), presets, roteamento por dispositivo virtual sem eco, bandeja, iniciar com o sistema, exportar/importar, desenho por GPU com proteção, 4 idiomas.

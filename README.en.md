@@ -36,6 +36,7 @@ HyperBass. The result goes to your headphones or speakers exactly once, with no 
 | **Tray** | Closing the window keeps the sound processed. Show, hide, effects on/off, restart and quit from the icon |
 | **Appearance** | Light, dark or automatic theme and 8 accent colors, as on macOS |
 | **Open at login** | Optionally hidden in the tray. Works with the AppImage |
+| **Updates** | When a new version is published on GitHub, **Update** shows in the sidebar. The AppImage downloads it, checks the SHA-256 GitHub publishes, swaps the file and reopens; the `.deb` opens the release page. This is the only thing that goes online, and it can be turned off |
 | **Export and import** | The configuration as JSON. Files exported by FXSound for Linux import too |
 | **Light on resources** | The window is drawn by the GPU where that is safe, and the spectrum stops completely when the window is hidden or another page is open |
 | **4 languages** | Portuguese, English, Spanish and Chinese, in the window and the tray menu |

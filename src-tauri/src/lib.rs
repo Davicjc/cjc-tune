@@ -18,6 +18,7 @@ mod routing;
 mod settings;
 mod state;
 mod tray;
+mod update;
 
 use commands::*;
 use routing::Router;
@@ -214,6 +215,9 @@ pub fn run() {
             export_settings,
             import_settings,
             restart_audio_service,
+            check_update,
+            install_update,
+            open_release_page,
         ])
         .on_window_event(|window, event| {
             if let WindowEvent::CloseRequested { api, .. } = event {

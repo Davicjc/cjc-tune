@@ -135,6 +135,59 @@ function useBackend() {
     return { powered, preset, eq, fx, audio, info, setInfo, visible, nextSeq, isLatest, adopt, actions, restarting, restart };
 }
 
+/**
+ * Updates from GitHub releases. `state`: idle | checking | ready | error |
+ * installing | failed. Checked once at launch when the option is on, and on
+ * demand from Settings.
+ */
+function useUpdates(enabled) {
+    const [state, setState] = useState("idle");
+    const [info, setInfo] = useState(null);
+    const [pct, setPct] = useState(0);
+    const [error, setError] = useState(null);
+    const checked = useRef(false);
+
+    const check = useCallback(() => {
+        setState("checking");
+        call("check_update")
+            .then((i) => {
+                setInfo(i);
+                setState("ready");
+            })
+            .catch((e) => {
+                setError(String(e));
+                setState("error");
+            });
+    }, []);
+
+    // Once per launch, a few seconds in, so it never competes with startup.
+    useEffect(() => {
+        if (!enabled || checked.current) return undefined;
+        checked.current = true;
+        const timer = setTimeout(check, 4000);
+        return () => clearTimeout(timer);
+    }, [enabled, check]);
+
+    useEffect(() => subscribe("update-progress", setPct), []);
+
+    const install = useCallback(() => {
+        if (!info?.available) return;
+        if (!info.can_install) {
+            call("open_release_page", { url: info.url }).catch(() => {});
+            return;
+        }
+        setPct(0);
+        setState("installing");
+        // On success the app closes and reopens from the new file.
+        call("install_update").catch((e) => {
+            setError(String(e));
+            setState("failed");
+        });
+    }, [info]);
+
+    return { state, info, pct, error, check, install };
+}
+
 /** What the sidebar and the Output page say about the sound right now. */
 function describe(t, audio, powered, restarting) {
     if (restarting) return { tone: "starting", label: t("status.restarting") };
@@ -151,6 +204,7 @@ function describe(t, audio, powered, restarting) {
 export default function App() {
     const b = useBackend();
     const { info } = b;
+    const updates = useUpdates(info ? info.ui.check_updates !== false : false);
     const [page, setPage] = useState("eq");
     const [notice, setNotice] = useState(null);
 
@@ -214,7 +268,7 @@ export default function App() {
     return (
         <I18nContext.Provider value={t}>
             <div className="window">
-                <Sidebar page={page} onPage={setPage} powered={b.powered} onPower={b.actions.power} status={status} />
+                <Sidebar page={page} onPage={setPage} powered={b.powered} onPower={b.actions.power} status={status} updates={updates} />
                 <main className="main">
                     <header className="toolbar" data-tauri-drag-region>
                         <div className="toolbar__titles" data-tauri-drag-region>
@@ -254,6 +308,7 @@ export default function App() {
                                 onAutostart={autostart}
                                 onExport={exportConfig}
                                 onImport={importConfig}
+                                updates={updates}
                                 notice={notice}
                             />
                         )}
