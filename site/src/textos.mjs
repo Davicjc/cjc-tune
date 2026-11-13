@@ -23,22 +23,22 @@ export const pt = {
   nav_instalar: "Instalar",
   nav_baixar: "Baixar",
 
-  hero_kicker: "Para Linux · grátis e de código aberto",
-  hero_h1: "Equalizador para o Linux *inteiro*.",
+  hero_kicker: "Equalizador para Linux",
+  hero_h1: "O som do seu Linux, ajustado do seu jeito.",
   hero_p:
-    "O CJC Tune processa tudo o que toca no seu PC (música, filmes, jogos e chamadas) com equalizador de 10 bandas e efeitos. Uma saída de áudio a mais, e o resultado vai para o seu fone uma vez só, sem eco.",
+    "Música, filmes, jogos e chamadas passam pelo CJC Tune antes de chegar no seu fone. Equalizador de 10 bandas, efeitos e predefinições suas, sem configurar programa por programa.",
   hero_baixar: "Baixar para Linux",
   hero_github: "Código no GitHub",
-  hero_versao: "Versão {{versao}} · AppImage e .deb",
+  hero_versao: "Grátis e de código aberto · versão {{versao}} · AppImage e .deb",
   hero_dica: "Arraste os pontos. A curva é a mesma que o app aplica.",
   fato_1: "10 bandas",
   fato_2: "5 efeitos",
   fato_3: "48 kHz estéreo",
   fato_4: "PipeWire e PulseAudio",
-  hero_alt: "Curva do equalizador em U com dez pontos ajustáveis",
+  hero_alt: "Janela do CJC Tune com o equalizador em U e o espectro ao vivo",
 
-  como_num: "01",
-  como_h2: "Uma saída a mais. *Nenhum* programa para configurar.",
+  como_num: "Como funciona",
+  como_h2: "Uma saída a mais. Nenhum programa para configurar.",
   como_p:
     "O CJC Tune cria uma saída chamada CJC Tune e coloca ela como padrão. Os programas tocam nela sem saber de nada; o CJC Tune processa e manda para o aparelho de verdade.",
   como_a: "Programas",
@@ -52,8 +52,8 @@ export const pt = {
   como_nota:
     "Se você troca de fone no sistema, ele vai junto. Se o servidor de áudio cair, ele volta sozinho. Se fechar o app, o som volta para a saída normal.",
 
-  ouca_num: "02",
-  ouca_h2: "Ouça a *diferença* aqui mesmo.",
+  ouca_num: "Ouça",
+  ouca_h2: "Ouça a diferença aqui mesmo.",
   ouca_p:
     "Uma batida gerada no seu navegador passa pelos mesmos dez filtros do app, com as mesmas frequências e a mesma largura. Mude a predefinição, arraste a curva e compare.",
   ouca_play: "Tocar",
@@ -69,8 +69,8 @@ export const pt = {
   preset_noite: "Modo noturno",
   ouca_volume: "Toca baixo. Use fone para ouvir o grave.",
 
-  rec_num: "03",
-  rec_h2: "O que vem *junto*.",
+  rec_num: "Recursos",
+  rec_h2: "O que vem junto.",
   rec_1_h: "Reiniciar serviço de áudio",
   rec_1_p: "Som estalou ou sumiu? Um clique na bandeja recria o dispositivo e zera os filtros, sem fechar nada.",
   rec_2_h: "Predefinições com o seu nome",
@@ -84,8 +84,8 @@ export const pt = {
   rec_6_h: "Claro, escuro e 4 idiomas",
   rec_6_p: "Tema automático, 8 cores de destaque, português, inglês, espanhol e chinês.",
 
-  telas_num: "04",
-  telas_h2: "Com cara de app de *Mac*, no Linux.",
+  telas_num: "Telas",
+  telas_h2: "Com cara de app de Mac, no Linux.",
   telas_p: "Barra lateral, grupos limpos, controles que você já conhece.",
   tela_1: "Equalizador",
   tela_1_p: "A curva real dos filtros, o espectro ao vivo por trás e um controle por banda.",
@@ -96,8 +96,8 @@ export const pt = {
   tela_4: "Ajustes",
   tela_4_p: "Tema, cor de destaque, idioma, início com a sessão e atualizações.",
 
-  inst_num: "05",
-  inst_h2: "Instale em *um* minuto.",
+  inst_num: "Instalar",
+  inst_h2: "Instale em um minuto.",
   inst_appimage: "AppImage",
   inst_appimage_p: "Roda em qualquer distribuição, sem instalar.",
   inst_deb: ".deb",
@@ -107,8 +107,8 @@ export const pt = {
   inst_baixar: "Baixar",
   inst_req: "Precisa de PipeWire ou PulseAudio (os padrões de hoje). Usava o FXSound for Linux? Feche ele antes: na primeira vez, o CJC Tune traz o seu EQ e os efeitos de lá.",
 
-  faq_num: "06",
-  faq_h2: "Perguntas *frequentes*.",
+  faq_num: "Perguntas",
+  faq_h2: "Perguntas frequentes.",
   faq: [
     ["Funciona no Ubuntu, Linux Mint, Fedora e Arch?", "Funciona em qualquer distribuição com PipeWire ou PulseAudio. O AppImage roda em todas; o .deb é para Debian, Ubuntu, Mint e derivados. O código é testado com PipeWire e com PulseAudio de verdade a cada mudança."],
     ["É grátis?", "Sim. É código aberto, licença MIT, sem conta, sem anúncio."],
@@ -144,22 +144,22 @@ export const en = {
   nav_instalar: "Install",
   nav_baixar: "Download",
 
-  hero_kicker: "For Linux · free and open source",
-  hero_h1: "An equalizer for *all* of Linux.",
+  hero_kicker: "Equalizer for Linux",
+  hero_h1: "Your Linux sound, tuned your way.",
   hero_p:
-    "CJC Tune processes everything your PC plays (music, movies, games and calls) with a 10-band equalizer and effects. One extra audio output, and the result reaches your headphones exactly once, with no echo.",
+    "Music, movies, games and calls go through CJC Tune before they reach your headphones. A 10-band equalizer, effects and presets of your own, with nothing to set up per app.",
   hero_baixar: "Download for Linux",
   hero_github: "Code on GitHub",
-  hero_versao: "Version {{versao}} · AppImage and .deb",
+  hero_versao: "Free and open source · version {{versao}} · AppImage and .deb",
   hero_dica: "Drag the points. The curve is the one the app applies.",
   fato_1: "10 bands",
   fato_2: "5 effects",
   fato_3: "48 kHz stereo",
   fato_4: "PipeWire and PulseAudio",
-  hero_alt: "U-shaped equalizer curve with ten adjustable points",
+  hero_alt: "The CJC Tune window with a U-shaped EQ and the live spectrum",
 
-  como_num: "01",
-  como_h2: "One more output. *Nothing* to set up per app.",
+  como_num: "How it works",
+  como_h2: "One more output. Nothing to set up per app.",
   como_p:
     "CJC Tune adds an output called CJC Tune and makes it the default. Apps play into it without knowing; CJC Tune processes the sound and sends it to the real device.",
   como_a: "Apps",
@@ -173,8 +173,8 @@ export const en = {
   como_nota:
     "Switch headphones in the system and it follows. If the audio server goes away it comes back by itself. Quit the app and sound returns to the normal output.",
 
-  ouca_num: "02",
-  ouca_h2: "Hear the *difference* right here.",
+  ouca_num: "Listen",
+  ouca_h2: "Hear the difference right here.",
   ouca_p:
     "A beat generated in your browser goes through the same ten filters as the app, with the same frequencies and width. Change the preset, drag the curve and compare.",
   ouca_play: "Play",
@@ -190,8 +190,8 @@ export const en = {
   preset_noite: "Night mode",
   ouca_volume: "It plays quietly. Use headphones to hear the bass.",
 
-  rec_num: "03",
-  rec_h2: "What comes *with* it.",
+  rec_num: "Features",
+  rec_h2: "What comes with it.",
   rec_1_h: "Restart audio service",
   rec_1_p: "Crackling or no sound? One click in the tray recreates the device and clears the filters, without closing anything.",
   rec_2_h: "Presets with your own names",
@@ -205,8 +205,8 @@ export const en = {
   rec_6_h: "Light, dark and 4 languages",
   rec_6_p: "Automatic theme, 8 accent colors, Portuguese, English, Spanish and Chinese.",
 
-  telas_num: "04",
-  telas_h2: "Looks like a *Mac* app, on Linux.",
+  telas_num: "Screens",
+  telas_h2: "Looks like a Mac app, on Linux.",
   telas_p: "A sidebar, clean groups and controls you already know.",
   tela_1: "Equalizer",
   tela_1_p: "The filters' real curve, the live spectrum behind it and a slider per band.",
@@ -217,8 +217,8 @@ export const en = {
   tela_4: "Settings",
   tela_4_p: "Theme, accent color, language, open at login and updates.",
 
-  inst_num: "05",
-  inst_h2: "Install it in *a* minute.",
+  inst_num: "Install",
+  inst_h2: "Install it in a minute.",
   inst_appimage: "AppImage",
   inst_appimage_p: "Runs on any distribution, nothing to install.",
   inst_deb: ".deb",
@@ -228,8 +228,8 @@ export const en = {
   inst_baixar: "Download",
   inst_req: "Needs PipeWire or PulseAudio (today's defaults). Used FXSound for Linux? Quit it first: on its first launch CJC Tune brings over your EQ and effects.",
 
-  faq_num: "06",
-  faq_h2: "Frequently *asked*.",
+  faq_num: "Questions",
+  faq_h2: "Frequently asked.",
   faq: [
     ["Does it work on Ubuntu, Linux Mint, Fedora and Arch?", "It works on any distribution with PipeWire or PulseAudio. The AppImage runs everywhere; the .deb is for Debian, Ubuntu, Mint and derivatives. The code is tested against real PipeWire and PulseAudio on every change."],
     ["Is it free?", "Yes. Open source, MIT license, no account, no ads."],

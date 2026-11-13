@@ -163,6 +163,12 @@
     }
   }
 
+  // ── Topo: fio embaixo só depois de rolar ──
+  const topo = document.querySelector(".topo");
+  const marcarTopo = () => topo?.classList.toggle("rolou", scrollY > 8);
+  addEventListener("scroll", marcarTopo, { passive: true });
+  marcarTopo();
+
   // ── Hero ──
   const heroEl = document.querySelector('[data-eq="hero"]');
   const hero = heroEl && new EqVivo(heroEl);

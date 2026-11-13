@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="darkreader-lock">
-  <meta name="color-scheme" content="dark light">
-  <meta name="theme-color" content="#0c0f14">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#ffffff">
   <title>{{title}}</title>
   <meta name="description" content="{{description}}">
   <meta name="keywords" content="{{keywords}}">
@@ -35,6 +35,7 @@
   <link rel="icon" type="image/png" href="{{raiz}}favicon.png">
   <link rel="apple-touch-icon" href="{{raiz}}img/apple-touch-icon.png">
   <link rel="preload" href="{{raiz}}fontes/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{raiz}}img/hero-{{lang_curto}}.webp" as="image" fetchpriority="high">
   <link rel="stylesheet" href="{{raiz}}estilo.css">
 
   <script type="application/ld+json">{{jsonld}}</script>
@@ -61,38 +62,25 @@
   </header>
 
   <main id="conteudo">
-    <!-- Hero: o objeto-assinatura é a própria curva do EQ, que se monta e fica arrastável. -->
+    <!-- Hero: cabe na primeira tela. Texto curto em cima, o app de verdade embaixo. -->
     <section class="hero" aria-labelledby="hero-titulo">
-      <div class="hero__texto">
-        <p class="kicker">{{hero_kicker}}</p>
-        <h1 id="hero-titulo">{{hero_h1}}</h1>
-        <p class="hero__lead">{{hero_p}}</p>
-        <div class="hero__ctas">
-          <a class="botao" href="#instalar" data-download>{{hero_baixar}}</a>
-          <a class="botao botao--fantasma" href="https://github.com/Davicjc/cjc-tune" rel="noopener">{{hero_github}}</a>
-        </div>
-        <p class="hero__versao" data-versao-texto="{{hero_versao_modelo}}">{{hero_versao}}</p>
+      <p class="rotulo">{{hero_kicker}}</p>
+      <h1 id="hero-titulo">{{hero_h1}}</h1>
+      <p class="hero__lead">{{hero_p}}</p>
+      <div class="hero__ctas">
+        <a class="botao" href="#instalar" data-download>{{hero_baixar}}</a>
+        <a class="botao botao--contorno" href="https://github.com/Davicjc/cjc-tune" rel="noopener">{{hero_github}}</a>
       </div>
-
-      <figure class="hero__objeto">
-        <div class="eq-vivo" data-eq="hero" data-ganhos="10,8,6,-2,-3,-3,4,6,8,10" role="img" aria-label="{{hero_alt}}">
-          <svg class="eq-vivo__svg" viewBox="0 0 600 360" aria-hidden="true"></svg>
-        </div>
-        <figcaption class="hero__dica">{{hero_dica}}</figcaption>
+      <p class="hero__versao" data-versao-texto="{{hero_versao_modelo}}">{{hero_versao}}</p>
+      <figure class="hero__janela">
+        <img src="{{raiz}}img/hero-{{lang_curto}}.webp" alt="{{hero_alt}}" width="1760" height="1120" fetchpriority="high" decoding="async">
       </figure>
-
-      <ul class="fatos" aria-label="CJC Tune">
-        <li>{{fato_1}}</li>
-        <li>{{fato_2}}</li>
-        <li>{{fato_3}}</li>
-        <li>{{fato_4}}</li>
-      </ul>
     </section>
 
     <!-- 01 Como funciona: o caminho do sinal, desenhado em fios. -->
-    <section class="secao secao--clara" id="como" aria-labelledby="como-titulo">
+    <section class="secao secao--bege" id="como" aria-labelledby="como-titulo">
       <div class="secao__cabeca">
-        <span class="num">{{como_num}}</span>
+        <span class="rotulo">{{como_num}}</span>
         <h2 id="como-titulo">{{como_h2}}</h2>
         <p>{{como_p}}</p>
       </div>
@@ -106,9 +94,9 @@
     </section>
 
     <!-- 02 Ouça: a mesma cadeia de filtros do app, em Web Audio. -->
-    <section class="secao secao--escura" id="ouca" aria-labelledby="ouca-titulo">
+    <section class="secao" id="ouca" aria-labelledby="ouca-titulo">
       <div class="secao__cabeca">
-        <span class="num">{{ouca_num}}</span>
+        <span class="rotulo">{{ouca_num}}</span>
         <h2 id="ouca-titulo">{{ouca_h2}}</h2>
         <p>{{ouca_p}}</p>
       </div>
@@ -139,9 +127,9 @@
     </section>
 
     <!-- 03 Recursos: grade par de seis. -->
-    <section class="secao secao--clara" id="recursos" aria-labelledby="rec-titulo">
+    <section class="secao secao--bege" id="recursos" aria-labelledby="rec-titulo">
       <div class="secao__cabeca">
-        <span class="num">{{rec_num}}</span>
+        <span class="rotulo">{{rec_num}}</span>
         <h2 id="rec-titulo">{{rec_h2}}</h2>
       </div>
       <ul class="recursos">
@@ -155,10 +143,10 @@
     </section>
 
     <!-- 04 Telas: baralho de janelas que se empilha em 3D com a rolagem. -->
-    <section class="secao secao--escura telas" id="telas" aria-labelledby="telas-titulo">
+    <section class="secao telas" id="telas" aria-labelledby="telas-titulo">
       <div class="telas__palco" data-baralho>
         <div class="secao__cabeca">
-          <span class="num">{{telas_num}}</span>
+          <span class="rotulo">{{telas_num}}</span>
           <h2 id="telas-titulo">{{telas_h2}}</h2>
           <p>{{telas_p}}</p>
         </div>
@@ -172,9 +160,9 @@
     </section>
 
     <!-- 05 Instalar -->
-    <section class="secao secao--clara" id="instalar" aria-labelledby="inst-titulo">
+    <section class="secao secao--bege" id="instalar" aria-labelledby="inst-titulo">
       <div class="secao__cabeca">
-        <span class="num">{{inst_num}}</span>
+        <span class="rotulo">{{inst_num}}</span>
         <h2 id="inst-titulo">{{inst_h2}}</h2>
       </div>
       <div class="instalar">
@@ -185,7 +173,7 @@
 ./cjc-tune_{{versao}}_amd64.AppImage</code></pre>
           <div class="pacote__acoes">
             <a class="botao" href="https://github.com/Davicjc/cjc-tune/releases/latest" data-asset="AppImage" rel="noopener">{{inst_baixar}} AppImage</a>
-            <button class="botao botao--fantasma" type="button" data-copiar="appimage" data-ok="{{inst_copiado}}">{{inst_copiar}}</button>
+            <button class="botao botao--contorno" type="button" data-copiar="appimage" data-ok="{{inst_copiado}}">{{inst_copiar}}</button>
           </div>
         </article>
         <article class="pacote">
@@ -194,7 +182,7 @@
           <pre><code data-cmd="deb">sudo apt install ./cjc-tune_{{versao}}_amd64.deb</code></pre>
           <div class="pacote__acoes">
             <a class="botao" href="https://github.com/Davicjc/cjc-tune/releases/latest" data-asset="deb" rel="noopener">{{inst_baixar}} .deb</a>
-            <button class="botao botao--fantasma" type="button" data-copiar="deb" data-ok="{{inst_copiado}}">{{inst_copiar}}</button>
+            <button class="botao botao--contorno" type="button" data-copiar="deb" data-ok="{{inst_copiado}}">{{inst_copiar}}</button>
           </div>
         </article>
       </div>
@@ -202,9 +190,9 @@
     </section>
 
     <!-- 06 Perguntas -->
-    <section class="secao secao--escura" id="perguntas" aria-labelledby="faq-titulo">
+    <section class="secao" id="perguntas" aria-labelledby="faq-titulo">
       <div class="secao__cabeca">
-        <span class="num">{{faq_num}}</span>
+        <span class="rotulo">{{faq_num}}</span>
         <h2 id="faq-titulo">{{faq_h2}}</h2>
       </div>
       <div class="faq">{{faq_html}}</div>

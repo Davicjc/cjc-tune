@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="darkreader-lock">
-  <meta name="color-scheme" content="dark light">
-  <meta name="theme-color" content="#0c0f14">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#ffffff">
   <title>CJC Tune · Equalizador para o Linux inteiro (PipeWire e PulseAudio)</title>
   <meta name="description" content="Equalizador de 10 bandas e efeitos para todo o som do Linux: música, filmes, jogos e chamadas. Grátis, código aberto, AppImage e .deb. Funciona com PipeWire e PulseAudio.">
   <meta name="keywords" content="equalizador linux, equalizer linux, pipewire equalizer, pulseaudio equalizador, fxsound linux, ubuntu equalizador, linux mint equalizador, appimage">
@@ -25,7 +25,7 @@
   <meta property="og:image" content="https://tune.cjc.pics/img/og-pt.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Curva do equalizador em U com dez pontos ajustáveis">
+  <meta property="og:image:alt" content="Janela do CJC Tune com o equalizador em U e o espectro ao vivo">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="CJC Tune · Equalizador para o Linux inteiro (PipeWire e PulseAudio)">
   <meta name="twitter:description" content="Equalizador de 10 bandas e efeitos para todo o som do Linux: música, filmes, jogos e chamadas. Grátis, código aberto, AppImage e .deb. Funciona com PipeWire e PulseAudio.">
@@ -35,6 +35,7 @@
   <link rel="icon" type="image/png" href="./favicon.png">
   <link rel="apple-touch-icon" href="./img/apple-touch-icon.png">
   <link rel="preload" href="./fontes/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./img/hero-pt.webp" as="image" fetchpriority="high">
   <link rel="stylesheet" href="./estilo.css">
 
   <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"CJC Tune","url":"https://tune.cjc.pics/","description":"Equalizador de 10 bandas e efeitos para todo o som do Linux: música, filmes, jogos e chamadas. Grátis, código aberto, AppImage e .deb. Funciona com PipeWire e PulseAudio.","applicationCategory":"MultimediaApplication","applicationSubCategory":"Audio equalizer","operatingSystem":"Linux","softwareVersion":"1.0.0","license":"https://opensource.org/licenses/MIT","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"BRL"},"downloadUrl":"https://github.com/Davicjc/cjc-tune/releases/latest","installUrl":"https://tune.cjc.pics/#instalar","codeRepository":"https://github.com/Davicjc/cjc-tune","screenshot":"https://tune.cjc.pics/img/eq-pt.webp","image":"https://tune.cjc.pics/img/icone-512.png","inLanguage":["pt-BR","en","es","zh-CN"],"featureList":["Reiniciar serviço de áudio","Predefinições com o seu nome","Saída automática","Fica na bandeja","Atualiza pelo app","Claro, escuro e 4 idiomas"],"author":{"@type":"Person","name":"Davi Castro","alternateName":"davicjc","url":"https://davicjc.com"}},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Funciona no Ubuntu, Linux Mint, Fedora e Arch?","acceptedAnswer":{"@type":"Answer","text":"Funciona em qualquer distribuição com PipeWire ou PulseAudio. O AppImage roda em todas; o .deb é para Debian, Ubuntu, Mint e derivados. O código é testado com PipeWire e com PulseAudio de verdade a cada mudança."}},{"@type":"Question","name":"É grátis?","acceptedAnswer":{"@type":"Answer","text":"Sim. É código aberto, licença MIT, sem conta, sem anúncio."}},{"@type":"Question","name":"Funciona com Spotify, navegador e jogos?","acceptedAnswer":{"@type":"Answer","text":"Sim. Ele processa a saída do sistema inteiro, então vale para qualquer programa que toque som, sem configurar cada um."}},{"@type":"Question","name":"O som estalou ou sumiu. O que eu faço?","acceptedAnswer":{"@type":"Answer","text":"Clique com o botão direito no ícone da bandeja e escolha Reiniciar serviço de áudio. Ele recria o dispositivo e zera os filtros em um instante. Também existe na tela Saída e por comando: pkill -USR2 cjc-tune."}},{"@type":"Question","name":"Ele envia dados meus para algum lugar?","acceptedAnswer":{"@type":"Answer","text":"Não. A única conexão é a consulta ao GitHub para saber se existe versão nova, e você pode desligar nos Ajustes."}},{"@type":"Question","name":"Qual a relação com o FXSound?","acceptedAnswer":{"@type":"Answer","text":"O CJC Tune nasceu do FXSound for Linux, um projeto comunitário de código aberto (licença MIT), e ganhou interface, organização e recursos próprios. Não tem ligação com o FxSound do Windows."}},{"@type":"Question","name":"Como desinstalar?","acceptedAnswer":{"@type":"Answer","text":"AppImage: apague o arquivo. .deb: sudo apt remove cjc-tune. Fechar o app sempre devolve o som para a saída normal."}}]},{"@context":"https://schema.org","@type":"WebSite","name":"CJC Tune","url":"https://tune.cjc.pics/","inLanguage":"pt-BR","publisher":{"@type":"Person","name":"Davi Castro","url":"https://davicjc.com"}}]</script>
@@ -61,39 +62,26 @@
   </header>
 
   <main id="conteudo">
-    <!-- Hero: o objeto-assinatura é a própria curva do EQ, que se monta e fica arrastável. -->
+    <!-- Hero: cabe na primeira tela. Texto curto em cima, o app de verdade embaixo. -->
     <section class="hero" aria-labelledby="hero-titulo">
-      <div class="hero__texto">
-        <p class="kicker">Para Linux · grátis e de código aberto</p>
-        <h1 id="hero-titulo">Equalizador para o Linux <em>inteiro</em>.</h1>
-        <p class="hero__lead">O CJC Tune processa tudo o que toca no seu PC (música, filmes, jogos e chamadas) com equalizador de 10 bandas e efeitos. Uma saída de áudio a mais, e o resultado vai para o seu fone uma vez só, sem eco.</p>
-        <div class="hero__ctas">
-          <a class="botao" href="#instalar" data-download>Baixar para Linux</a>
-          <a class="botao botao--fantasma" href="https://github.com/Davicjc/cjc-tune" rel="noopener">Código no GitHub</a>
-        </div>
-        <p class="hero__versao" data-versao-texto="Versão {{versao}} · AppImage e .deb">Versão 1.0.0 · AppImage e .deb</p>
+      <p class="rotulo">Equalizador para Linux</p>
+      <h1 id="hero-titulo">O som do seu Linux, ajustado do seu jeito.</h1>
+      <p class="hero__lead">Música, filmes, jogos e chamadas passam pelo CJC Tune antes de chegar no seu fone. Equalizador de 10 bandas, efeitos e predefinições suas, sem configurar programa por programa.</p>
+      <div class="hero__ctas">
+        <a class="botao" href="#instalar" data-download>Baixar para Linux</a>
+        <a class="botao botao--contorno" href="https://github.com/Davicjc/cjc-tune" rel="noopener">Código no GitHub</a>
       </div>
-
-      <figure class="hero__objeto">
-        <div class="eq-vivo" data-eq="hero" data-ganhos="10,8,6,-2,-3,-3,4,6,8,10" role="img" aria-label="Curva do equalizador em U com dez pontos ajustáveis">
-          <svg class="eq-vivo__svg" viewBox="0 0 600 360" aria-hidden="true"></svg>
-        </div>
-        <figcaption class="hero__dica">Arraste os pontos. A curva é a mesma que o app aplica.</figcaption>
+      <p class="hero__versao" data-versao-texto="Grátis e de código aberto · versão {{versao}} · AppImage e .deb">Grátis e de código aberto · versão 1.0.0 · AppImage e .deb</p>
+      <figure class="hero__janela">
+        <img src="./img/hero-pt.webp" alt="Janela do CJC Tune com o equalizador em U e o espectro ao vivo" width="1760" height="1120" fetchpriority="high" decoding="async">
       </figure>
-
-      <ul class="fatos" aria-label="CJC Tune">
-        <li>10 bandas</li>
-        <li>5 efeitos</li>
-        <li>48 kHz estéreo</li>
-        <li>PipeWire e PulseAudio</li>
-      </ul>
     </section>
 
     <!-- 01 Como funciona: o caminho do sinal, desenhado em fios. -->
-    <section class="secao secao--clara" id="como" aria-labelledby="como-titulo">
+    <section class="secao secao--bege" id="como" aria-labelledby="como-titulo">
       <div class="secao__cabeca">
-        <span class="num">01</span>
-        <h2 id="como-titulo">Uma saída a mais. <em>Nenhum</em> programa para configurar.</h2>
+        <span class="rotulo">Como funciona</span>
+        <h2 id="como-titulo">Uma saída a mais. Nenhum programa para configurar.</h2>
         <p>O CJC Tune cria uma saída chamada CJC Tune e coloca ela como padrão. Os programas tocam nela sem saber de nada; o CJC Tune processa e manda para o aparelho de verdade.</p>
       </div>
       <ol class="fluxo" data-fluxo>
@@ -106,10 +94,10 @@
     </section>
 
     <!-- 02 Ouça: a mesma cadeia de filtros do app, em Web Audio. -->
-    <section class="secao secao--escura" id="ouca" aria-labelledby="ouca-titulo">
+    <section class="secao" id="ouca" aria-labelledby="ouca-titulo">
       <div class="secao__cabeca">
-        <span class="num">02</span>
-        <h2 id="ouca-titulo">Ouça a <em>diferença</em> aqui mesmo.</h2>
+        <span class="rotulo">Ouça</span>
+        <h2 id="ouca-titulo">Ouça a diferença aqui mesmo.</h2>
         <p>Uma batida gerada no seu navegador passa pelos mesmos dez filtros do app, com as mesmas frequências e a mesma largura. Mude a predefinição, arraste a curva e compare.</p>
       </div>
       <div class="demo">
@@ -123,7 +111,7 @@
             <button type="button" role="radio" aria-checked="false" data-ab="sem">Sem</button>
           </div>
         </div>
-        <div class="eq-vivo eq-vivo--grande" data-eq="demo" data-ganhos="10,8,6,-2,-3,-3,4,6,8,10" role="img" aria-label="Curva do equalizador em U com dez pontos ajustáveis">
+        <div class="eq-vivo eq-vivo--grande" data-eq="demo" data-ganhos="10,8,6,-2,-3,-3,4,6,8,10" role="img" aria-label="Janela do CJC Tune com o equalizador em U e o espectro ao vivo">
           <svg class="eq-vivo__svg" viewBox="0 0 900 300" aria-hidden="true"></svg>
         </div>
         <div class="chips" role="radiogroup" aria-label="Predefinição">
@@ -139,10 +127,10 @@
     </section>
 
     <!-- 03 Recursos: grade par de seis. -->
-    <section class="secao secao--clara" id="recursos" aria-labelledby="rec-titulo">
+    <section class="secao secao--bege" id="recursos" aria-labelledby="rec-titulo">
       <div class="secao__cabeca">
-        <span class="num">03</span>
-        <h2 id="rec-titulo">O que vem <em>junto</em>.</h2>
+        <span class="rotulo">Recursos</span>
+        <h2 id="rec-titulo">O que vem junto.</h2>
       </div>
       <ul class="recursos">
         <li><span class="recursos__icone" data-icone="reiniciar"></span><h3>Reiniciar serviço de áudio</h3><p>Som estalou ou sumiu? Um clique na bandeja recria o dispositivo e zera os filtros, sem fechar nada.</p></li>
@@ -155,11 +143,11 @@
     </section>
 
     <!-- 04 Telas: baralho de janelas que se empilha em 3D com a rolagem. -->
-    <section class="secao secao--escura telas" id="telas" aria-labelledby="telas-titulo">
+    <section class="secao telas" id="telas" aria-labelledby="telas-titulo">
       <div class="telas__palco" data-baralho>
         <div class="secao__cabeca">
-          <span class="num">04</span>
-          <h2 id="telas-titulo">Com cara de app de <em>Mac</em>, no Linux.</h2>
+          <span class="rotulo">Telas</span>
+          <h2 id="telas-titulo">Com cara de app de Mac, no Linux.</h2>
           <p>Barra lateral, grupos limpos, controles que você já conhece.</p>
         </div>
         <ol class="baralho">
@@ -172,10 +160,10 @@
     </section>
 
     <!-- 05 Instalar -->
-    <section class="secao secao--clara" id="instalar" aria-labelledby="inst-titulo">
+    <section class="secao secao--bege" id="instalar" aria-labelledby="inst-titulo">
       <div class="secao__cabeca">
-        <span class="num">05</span>
-        <h2 id="inst-titulo">Instale em <em>um</em> minuto.</h2>
+        <span class="rotulo">Instalar</span>
+        <h2 id="inst-titulo">Instale em um minuto.</h2>
       </div>
       <div class="instalar">
         <article class="pacote">
@@ -185,7 +173,7 @@
 ./cjc-tune_1.0.0_amd64.AppImage</code></pre>
           <div class="pacote__acoes">
             <a class="botao" href="https://github.com/Davicjc/cjc-tune/releases/latest" data-asset="AppImage" rel="noopener">Baixar AppImage</a>
-            <button class="botao botao--fantasma" type="button" data-copiar="appimage" data-ok="Copiado">Copiar</button>
+            <button class="botao botao--contorno" type="button" data-copiar="appimage" data-ok="Copiado">Copiar</button>
           </div>
         </article>
         <article class="pacote">
@@ -194,7 +182,7 @@
           <pre><code data-cmd="deb">sudo apt install ./cjc-tune_1.0.0_amd64.deb</code></pre>
           <div class="pacote__acoes">
             <a class="botao" href="https://github.com/Davicjc/cjc-tune/releases/latest" data-asset="deb" rel="noopener">Baixar .deb</a>
-            <button class="botao botao--fantasma" type="button" data-copiar="deb" data-ok="Copiado">Copiar</button>
+            <button class="botao botao--contorno" type="button" data-copiar="deb" data-ok="Copiado">Copiar</button>
           </div>
         </article>
       </div>
@@ -202,10 +190,10 @@
     </section>
 
     <!-- 06 Perguntas -->
-    <section class="secao secao--escura" id="perguntas" aria-labelledby="faq-titulo">
+    <section class="secao" id="perguntas" aria-labelledby="faq-titulo">
       <div class="secao__cabeca">
-        <span class="num">06</span>
-        <h2 id="faq-titulo">Perguntas <em>frequentes</em>.</h2>
+        <span class="rotulo">Perguntas</span>
+        <h2 id="faq-titulo">Perguntas frequentes.</h2>
       </div>
       <div class="faq"><details><summary>Funciona no Ubuntu, Linux Mint, Fedora e Arch?</summary><p>Funciona em qualquer distribuição com PipeWire ou PulseAudio. O AppImage roda em todas; o .deb é para Debian, Ubuntu, Mint e derivados. O código é testado com PipeWire e com PulseAudio de verdade a cada mudança.</p></details>
         <details><summary>É grátis?</summary><p>Sim. É código aberto, licença MIT, sem conta, sem anúncio.</p></details>
