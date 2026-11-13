@@ -646,14 +646,7 @@ impl Session {
 
     fn create_virtual_sink(&mut self) -> Result<(), String> {
         self.ensure_ready()?;
-        // float32 so a hot mix of several applications can exceed 0 dBFS
-        // inside the sink without clipping before the limiter sees it.
-        let args = format!(
-            "sink_name={VIRTUAL_SINK} \
-             sink_properties=device.description={VIRTUAL_SINK_DESCRIPTION} \
-             format=float32le rate={SAMPLE_RATE} channels={CHANNELS} \
-             channel_map=front-left,front-right"
-        );
+        let args = null_sink_args();
         let slot = Rc::new(RefCell::new(None));
         let fill = Rc::clone(&slot);
         let _op = self
@@ -1170,6 +1163,22 @@ fn is_output_candidate(name: &str) -> bool {
     name != VIRTUAL_SINK && name != "auto_null"
 }
 
+/// Arguments for `module-null-sink`.
+///
+/// The description has a space, so it is quoted twice: the module argument
+/// in single quotes and the property value in double quotes. Unquoted,
+/// PulseAudio refuses the whole module and PipeWire creates the device with
+/// the wrong properties. float32 so a hot mix of several applications can
+/// exceed 0 dBFS inside the sink without clipping before the limiter sees it.
+fn null_sink_args() -> String {
+    format!(
+        "sink_name={VIRTUAL_SINK} \
+         sink_properties='device.description=\"{VIRTUAL_SINK_DESCRIPTION}\"' \
+         format=float32le rate={SAMPLE_RATE} channels={CHANNELS} \
+         channel_map=front-left,front-right"
+    )
+}
+
 /// Short, plain-language version of an internal error for the status bar; the
 /// full reason goes to the log.
 fn user_message(reason: &str) -> &'static str {
@@ -1288,6 +1297,19 @@ mod tests {
             choose_output(&sinks, None, None, None).as_deref(),
             Some("speakers")
         );
+    }
+
+    #[test]
+    fn null_sink_arguments_quote_the_description() {
+        let args = null_sink_args();
+        assert!(
+            args.contains("sink_properties='device.description=\"CJC Tune\"'"),
+            "{args}"
+        );
+        assert!(args.starts_with("sink_name=cjc_tune_sink "));
+        // Every other argument stays a single word.
+        let rest = args.replace("'device.description=\"CJC Tune\"'", "X");
+        assert_eq!(rest.split_whitespace().count(), 6, "{rest}");
     }
 
     #[test]
