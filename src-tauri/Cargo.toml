@@ -1,0 +1,32 @@
+[package]
+name = "cjc-tune"
+version = "1.0.0"
+description = "CJC Tune: system-wide equalizer and sound effects for Linux"
+authors = ["Davi Castro <Davicjc@gmail.com>"]
+license = "MIT"
+repository = "https://github.com/Davicjc/cjc-tune"
+edition = "2021"
+rust-version = "1.82"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+name = "cjc_tune_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.5.4", features = [] }
+
+[dependencies]
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+log = "0.4"
+tauri = { version = "2.10.0", features = ["tray-icon"] }
+tauri-plugin-log = "2"
+tauri-plugin-dialog = "2"
+tauri-plugin-autostart = "2"
+dbus = "0.9"
+libpulse-binding = "2.28"
+libc = "0.2"
+signal-hook = "0.3"
+rustfft = "6.2"

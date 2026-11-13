@@ -1,0 +1,62 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+  "productName": "CJC Tune",
+  "version": "1.0.0",
+  "identifier": "com.davicjc.cjctune",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:5173",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "CJC Tune",
+        "visible": false,
+        "width": 880,
+        "height": 560,
+        "minWidth": 720,
+        "minHeight": 540,
+        "resizable": true,
+        "fullscreen": false,
+        "decorations": false,
+        "transparent": true,
+        "center": true,
+        "shadow": true
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; connect-src 'self'; img-src 'self' data:"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "linux": {
+      "deb": {
+        "depends": [
+          "libpulse0"
+        ]
+      },
+      "rpm": {
+        "depends": [
+          "libpulse.so.0()(64bit)"
+        ]
+      }
+    },
+    "shortDescription": "Equalizador e efeitos de som para o Linux inteiro",
+    "longDescription": "CJC Tune processa todo o som do sistema: equalizador de 10 bandas, efeitos, presets, bandeja e reinício rápido do serviço de áudio.",
+    "publisher": "Davi Castro",
+    "copyright": "© 2026 Davi Castro · baseado no FXSound for Linux (MIT)",
+    "category": "Music"
+  }
+}
