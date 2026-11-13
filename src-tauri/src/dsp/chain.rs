@@ -524,8 +524,8 @@ impl Processor {
             let mut sum_val = 0.0f32;
             let count = bin_high - bin_low;
 
-            for bin in bin_low..bin_high {
-                let mag = self.complex_buffer[bin].norm();
+            for value in &self.complex_buffer[bin_low..bin_high] {
+                let mag = value.norm();
                 max_val = max_val.max(mag);
                 sum_val += mag;
             }

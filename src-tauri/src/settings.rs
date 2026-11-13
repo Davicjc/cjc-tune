@@ -248,6 +248,8 @@ pub struct SettingsStore {
     /// `None` until the first launch has saved anything.
     current: Arc<Mutex<Option<Settings>>>,
     save: Mutex<Option<Sender<()>>>,
+    /// The background writer, joined by `flush` so the two never write at once.
+    writer: Mutex<Option<std::thread::JoinHandle<()>>>,
 }
 
 impl SettingsStore {
@@ -271,10 +273,11 @@ impl SettingsStore {
             });
 
         let current = Arc::new(Mutex::new(loaded));
+        let mut writer = None;
         let save = path.clone().map(|path| {
             let (tx, rx) = mpsc::channel::<()>();
             let current = Arc::clone(&current);
-            std::thread::Builder::new()
+            let handle = std::thread::Builder::new()
                 .name("cjctune-settings".into())
                 .spawn(move || {
                     while rx.recv().is_ok() {
@@ -290,6 +293,7 @@ impl SettingsStore {
                     }
                 })
                 .expect("failed to spawn the settings writer");
+            writer = Some(handle);
             tx
         });
 
@@ -297,6 +301,7 @@ impl SettingsStore {
             path,
             current,
             save: Mutex::new(save),
+            writer: Mutex::new(writer),
         }
     }
 
@@ -323,9 +328,18 @@ impl SettingsStore {
         }
     }
 
-    /// Write immediately and stop the background writer. Call on exit.
+    /// Stop the background writer, wait for it, then write once more. Call on
+    /// exit.
+    ///
+    /// Waiting matters: dropping the sender wakes the writer, which saves on
+    /// its way out. Writing here at the same moment raced it on the same
+    /// temporary file, and the rename could publish a half-written file — a
+    /// settings file that came back empty after closing the app.
     pub fn flush(&self) {
         self.save.lock().unwrap_or_else(|e| e.into_inner()).take();
+        if let Some(writer) = self.writer.lock().unwrap_or_else(|e| e.into_inner()).take() {
+            let _ = writer.join();
+        }
         if let Some(path) = &self.path {
             write(path, &self.current);
         }

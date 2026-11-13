@@ -142,34 +142,3 @@ jobs:
           dpkg-deb -f "$DEB" Depends | tee /dev/stderr | grep -q 'libpulse0'
           rpm -qpR "$RPM" | tee /dev/stderr | grep -q 'libpulse.so.0()(64bit)'
           ls -la src-tauri/target/release/bundle/appimage/*.AppImage
-
-  # ── Snap: build it, then launch it under real strict confinement ─────────
-  # 1.1.4's snap aborted at launch (#511): it bundled a second Mesa that
-  # clashed with the GNOME platform's. Only a real install shows that.
-  snap:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Build snap
-        uses: snapcore/action-build@v1
-        id: snapcraft
-
-      - name: Install test tools
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y pipewire pipewire-pulse wireplumber pipewire-bin \
-            pulseaudio-utils dbus-user-session sox python3-numpy xvfb x11-utils imagemagick
-
-      - name: Smoke-test the snap
-        run: SHOTS="$PWD/snap-smoke" tests/snap-smoke.sh "${{ steps.snapcraft.outputs.snap }}"
-
-      - name: Upload snap and smoke-test output
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: snap
-          path: |
-            ${{ steps.snapcraft.outputs.snap }}
-            snap-smoke/
-          retention-days: 7

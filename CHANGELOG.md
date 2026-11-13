@@ -13,6 +13,9 @@ Primeira versão do CJC Tune, um app próprio que nasceu do FXSound for Linux 1.
 - **Tela Saída**: lista de dispositivos com "Automático", qual está em uso, estado do serviço.
 - Na primeira vez que abre, **traz a configuração do FXSound for Linux** (EQ, efeitos, saída), se existir. Importa também arquivos exportados por ele.
 
+### Corrigido
+- **Fechar o app podia apagar os ajustes salvos** (bug herdado). Ao sair, a gravação final e a thread de gravação escreviam no mesmo arquivo temporário ao mesmo tempo, e o arquivo publicado podia sair vazio ou pela metade. Agora a gravação final espera a thread terminar.
+
 ### Mudou
 - Código reorganizado: o processamento virou o módulo `dsp/` (filtros, reverb, dinâmica e cadeia em arquivos separados), o roteamento virou `routing`, e a inicialização foi dividida em `commands`, `tray` e `state`.
 - Nome, ícone, identificador (`com.davicjc.cjctune`), dispositivo de áudio (`cjc_tune_sink`) e pasta de configuração próprios.
