@@ -31,7 +31,7 @@ surround 3D e HyperBass. O resultado vai para o seu fone ou caixa de som, uma ve
 |---|---|
 | **Equalizador em gráfico** | A curva na tela é a resposta real dos 10 filtros, calculada com a mesma fórmula do processador. Arraste os pontos ou use os controles embaixo; o espectro ao vivo fica por trás |
 | **Efeitos** | Fidelidade, Ambiente, Reforço dinâmico, Surround 3D e HyperBass, com 10 predefinições |
-| **Reiniciar serviço de áudio** | Na bandeja e na tela Saída. Recria o dispositivo e zera os filtros sem fechar nada: resolve som estalando, travado ou sumido. `pkill -USR1 cjc-tune` faz o mesmo, então dá para pôr num atalho de teclado |
+| **Reiniciar serviço de áudio** | Na bandeja e na tela Saída. Recria o dispositivo e zera os filtros sem fechar nada: resolve som estalando, travado ou sumido. `pkill -USR2 cjc-tune` faz o mesmo, então dá para pôr num atalho de teclado |
 | **Saída** | Lista os dispositivos, mostra qual está em uso e segue o aparelho que você conectar no modo Automático |
 | **Bandeja** | Fechar a janela deixa o som processado rodando. Mostrar, esconder, ligar/desligar efeitos, reiniciar e sair pelo ícone |
 | **Aparência** | Tema claro, escuro ou automático e 8 cores de destaque, como no macOS |

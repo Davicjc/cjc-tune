@@ -81,7 +81,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev librsvg2-dev \
-            libpulse-dev libssl-dev pulseaudio-utils dbus-x11 sox python3-numpy \
+            libpulse-dev libssl-dev libayatana-appindicator3-dev pulseaudio-utils dbus-x11 sox python3-numpy \
             xvfb x11-utils xdotool imagemagick
           if [ "${{ matrix.server }}" = pw ]; then
             sudo apt-get install -y pipewire pipewire-pulse wireplumber pipewire-bin

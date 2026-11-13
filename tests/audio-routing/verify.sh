@@ -126,9 +126,9 @@ expect "second copy reports the running one" grep -q "already running" /tmp/app2
 expect "still exactly one CJC Tune device" [ "$(sink_count cjc_tune_sink)" -eq 1 ]
 expect "first copy still routes audio" output_is hw_headphones
 
-echo; echo "=== 5b. Restart audio service (tray item; SIGUSR1 does the same)"
+echo; echo "=== 5b. Restart audio service (tray item; SIGUSR2 does the same)"
 BEFORE=$(grep -c "Routing system audio through CJC Tune" /tmp/app.log)
-kill -USR1 "$APP"
+kill -USR2 "$APP"
 expect "restart is logged" wait_for 5 grep -q "Restarting the audio routing on request" /tmp/app.log
 expect "routing comes back within 5 s" wait_for 5 sh -c "[ \$(grep -c 'Routing system audio through CJC Tune' /tmp/app.log) -gt $BEFORE ]"
 expect "the app is still running" kill -0 "$APP"

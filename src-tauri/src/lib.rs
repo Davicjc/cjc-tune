@@ -29,11 +29,13 @@ use tray::*;
 /// virtual device is removed and the system's own output restored. A second
 /// exit signal, or a shutdown that hangs, exits immediately.
 ///
-/// SIGUSR1 restarts the audio service instead, the same as the tray item, so
-/// it can be bound to a key: `pkill -USR1 cjc-tune`.
+/// SIGUSR2 restarts the audio service instead, the same as the tray item, so
+/// it can be bound to a key: `pkill -USR2 cjc-tune`. Not SIGUSR1: WebKit's
+/// JavaScriptCore installs its own SIGUSR1 handler (thread suspension) in
+/// this process and takes it over.
 fn handle_signals(handle: tauri::AppHandle) {
-    use signal_hook::consts::{SIGHUP, SIGINT, SIGTERM, SIGUSR1};
-    let mut signals = match signal_hook::iterator::Signals::new([SIGTERM, SIGINT, SIGHUP, SIGUSR1])
+    use signal_hook::consts::{SIGHUP, SIGINT, SIGTERM, SIGUSR2};
+    let mut signals = match signal_hook::iterator::Signals::new([SIGTERM, SIGINT, SIGHUP, SIGUSR2])
     {
         Ok(signals) => signals,
         Err(e) => {
@@ -46,7 +48,7 @@ fn handle_signals(handle: tauri::AppHandle) {
         .spawn(move || {
             let mut exiting = false;
             for signal in signals.forever() {
-                if signal == SIGUSR1 {
+                if signal == SIGUSR2 {
                     if let Some(state) = handle.try_state::<AppState>() {
                         restart_audio(&state);
                     }
@@ -144,11 +146,21 @@ pub fn run() {
             );
             let powered = settings.get().map(|s| s.powered).unwrap_or(true);
             let language = i18n::resolve(&saved_ui.language);
-            let tray = match build_tray(app.handle(), powered, language) {
-                Ok(tray) => Some(tray),
-                Err(e) => {
+            // libappindicator is loaded at run time and *panics* when the
+            // library is missing (minimal installs, CI). That must cost the
+            // tray icon, not the whole app.
+            let built = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                build_tray(app.handle(), powered, language)
+            }));
+            let tray = match built {
+                Ok(Ok(tray)) => Some(tray),
+                Ok(Err(e)) => {
                     // Without a tray, hiding the window would strand the app.
                     log::warn!("No system tray available ({e}); closing the window will quit");
+                    None
+                }
+                Err(_) => {
+                    log::warn!("No tray library (libayatana-appindicator3) installed; closing the window will quit");
                     None
                 }
             };

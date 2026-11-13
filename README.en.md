@@ -31,7 +31,7 @@ HyperBass. The result goes to your headphones or speakers exactly once, with no 
 |---|---|
 | **Graphical EQ** | The curve on screen is the real response of the ten filters, computed with the same math as the processor. Drag the points or use the sliders below; the live spectrum sits behind it |
 | **Effects** | Fidelity, Ambience, Dynamic boost, 3D surround and HyperBass, with 10 presets |
-| **Restart audio service** | In the tray and on the Output page. Recreates the device and clears the filters without closing anything, for crackling, stuck or missing sound. `pkill -USR1 cjc-tune` does the same, so it can go on a keyboard shortcut |
+| **Restart audio service** | In the tray and on the Output page. Recreates the device and clears the filters without closing anything, for crackling, stuck or missing sound. `pkill -USR2 cjc-tune` does the same, so it can go on a keyboard shortcut |
 | **Output** | Lists the devices, shows which one is in use, and follows whatever you plug in when set to Automatic |
 | **Tray** | Closing the window keeps the sound processed. Show, hide, effects on/off, restart and quit from the icon |
 | **Appearance** | Light, dark or automatic theme and 8 accent colors, as on macOS |
