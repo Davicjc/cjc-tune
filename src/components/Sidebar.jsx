@@ -91,6 +91,7 @@ export default function Sidebar({ page, onPage, powered, onPower, status }) {
                 </div>
                 {status.detail && <div className="power__detail" title={status.detail}>{status.detail}</div>}
             </div>
+            <div className="signature" data-tauri-drag-region>by davicjc</div>
         </aside>
     );
 }

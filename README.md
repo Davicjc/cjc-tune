@@ -4,7 +4,7 @@
 
 <h1 align="center">CJC Tune</h1>
 
-<p align="center">Equalizador e efeitos de som para o Linux inteiro, com cara de app de Mac.</p>
+<p align="center">Equalizador e efeitos de som para o Linux inteiro, com cara de app de Mac.<br><sub>by <a href="https://davicjc.com">davicjc</a></sub></p>
 
 <p align="center">
   <img alt="Linux" src="https://img.shields.io/badge/Linux-0d1117?style=for-the-badge&logo=linux&logoColor=white">
@@ -113,4 +113,4 @@ Raul909 e colaboradores, sob licença MIT. O processamento e o roteamento de áu
 interface, a organização do código, o reinício do serviço e a migração são deste projeto. O
 aviso de copyright original está mantido no [LICENSE](LICENSE).
 
-Feito por [Davi Castro](https://davicjc.com).
+**by [davicjc](https://davicjc.com)** · Davi Castro

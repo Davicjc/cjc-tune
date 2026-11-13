@@ -310,6 +310,14 @@ button {
 .dot--starting { background: var(--warn); }
 .dot--error { background: var(--bad); }
 
+.signature {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--text-3);
+}
+
 /* ── Main ───────────────────────────────────────────────── */
 
 .main {

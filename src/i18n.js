@@ -132,7 +132,7 @@ const en = {
     "set.imported": "Configuration imported.",
     "set.about": "About",
     "set.version": "Version {version}",
-    "set.by": "Made by Davi Castro",
+    "set.by": "by davicjc (Davi Castro)",
     "set.basedOn": "Based on FXSound for Linux (Raul909, MIT license).",
     "set.loading": "Loading…",
 
@@ -265,7 +265,7 @@ const pt = {
     "set.imported": "Configuração importada.",
     "set.about": "Sobre",
     "set.version": "Versão {version}",
-    "set.by": "Feito por Davi Castro",
+    "set.by": "by davicjc (Davi Castro)",
     "set.basedOn": "Baseado no FXSound for Linux (Raul909, licença MIT).",
     "set.loading": "Carregando…",
 
@@ -398,7 +398,7 @@ const es = {
     "set.imported": "Configuración importada.",
     "set.about": "Acerca de",
     "set.version": "Versión {version}",
-    "set.by": "Hecho por Davi Castro",
+    "set.by": "by davicjc (Davi Castro)",
     "set.basedOn": "Basado en FXSound for Linux (Raul909, licencia MIT).",
     "set.loading": "Cargando…",
 
@@ -531,7 +531,7 @@ const zh = {
     "set.imported": "配置已导入。",
     "set.about": "关于",
     "set.version": "版本 {version}",
-    "set.by": "作者 Davi Castro",
+    "set.by": "by davicjc (Davi Castro)",
     "set.basedOn": "基于 FXSound for Linux（Raul909，MIT 许可证）。",
     "set.loading": "正在加载…",
 
