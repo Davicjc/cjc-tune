@@ -84,6 +84,13 @@ module_of() { pactl list short modules | awk -v n="sink_name=$1" 'index($0, n){p
 
 echo; echo "=== 1. Launch"
 start_app
+# The very first launch on a fresh CI runner can spend a long time before Tauri's
+# setup runs at all (CI run #9: 18 s, usually under 4 s), and that says nothing
+# about routing. Wait for setup ("Window rendering") with a generous bound, then
+# hold routing to the same 10 s as before, counted from there.
+T0=$SECONDS
+expect "CJC Tune starts within 60 s" wait_for 60 grep -q "Window rendering" /tmp/app.log
+echo "    app setup ran after $((SECONDS - T0)) s"
 expect "CJC Tune routes system audio within 10 s" wait_for 10 sh -c '[ "$(grep -c "Routing system audio through CJC Tune" /tmp/app.log)" -ge 1 ]'
 sleep 1
 expect "UI main thread is free (not blocked on the audio server)" main_thread_free

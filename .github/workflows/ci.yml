@@ -4,8 +4,10 @@ name: CI
 # on tags, so this is where problems get caught before anything ships.
 on:
   pull_request:
+    paths-ignore: ['site/**']
   push:
     branches: [main]
+    paths-ignore: ['site/**']
   workflow_dispatch:
 
 concurrency:
@@ -17,9 +19,9 @@ jobs:
   checks:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 20
           cache: npm
@@ -64,9 +66,9 @@ jobs:
       matrix:
         server: [pw, pa]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 20
           cache: npm
@@ -99,7 +101,7 @@ jobs:
 
       - name: Upload app log
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: routing-${{ matrix.server }}-log
           path: /tmp/app.log
@@ -111,9 +113,9 @@ jobs:
   bundles:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 20
           cache: npm
